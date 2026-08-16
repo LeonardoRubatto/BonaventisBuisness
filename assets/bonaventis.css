@@ -164,6 +164,7 @@ html.js [data-reveal].in{opacity:1;transform:none}
 .menu-cta .btn{flex:0 0 auto}
 @media (max-width:759px){
   .menu-cta{flex-direction:column;align-items:stretch}
+  .menu-cta__copy{flex:0 1 auto}
   .menu-cta .btn{width:100%;text-align:center}
 }
 
