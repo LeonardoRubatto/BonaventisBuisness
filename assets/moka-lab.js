@@ -50,7 +50,19 @@
     var render=function(){
       var rect=track.getBoundingClientRect();
       var scrollable=Math.max(1,track.offsetHeight-window.innerHeight);
-      var p=clamp(-rect.top/scrollable,0,1);
+      var target=clamp(-rect.top/scrollable,0,1);
+      /* Chase the scroll-derived target instead of snapping to it every
+         frame. Raw scroll position (especially touch momentum on mobile,
+         which delivers position in uneven, chunky steps) made the whole
+         choreography feel jerky and mechanical. Lerping the rendered value
+         toward the target each frame turns that into a smooth, delicate
+         glide, and costs nothing while idle: render() reports whether it's
+         still converging, and tick() only keeps scheduling frames while
+         at least one story hasn't settled yet. */
+      var settled=story._mokaP==null;
+      var p=settled?target:story._mokaP+(target-story._mokaP)*.16;
+      if(Math.abs(target-p)<.0004)p=target;
+      story._mokaP=p;
       var assemble=ease(range(p,.02,.20));
       var open=ease(range(p,.12,.30));
       var inner=range(p,.28,.84);
@@ -85,6 +97,8 @@
       var phase=p<.14?0:p<.34?1:p<.58?2:p<.82?3:4;
       if(phaseNum)phaseNum.textContent=('0'+phase).slice(-2);
       if(phaseName)phaseName.textContent=phaseNames[phase];
+
+      return p!==target;
     };
     story._mokaRender=render;
     if(reduce){
@@ -94,7 +108,13 @@
     }
   });
 
-  var tick=function(){raf=0;stories.forEach(function(s){if(s._mokaRender&&!reduce)s._mokaRender();});if(!reduce)renderProjects();};
+  var tick=function(){
+    raf=0;
+    var settling=false;
+    stories.forEach(function(s){if(s._mokaRender&&!reduce&&s._mokaRender())settling=true;});
+    if(!reduce)renderProjects();
+    if(settling)request();
+  };
   var request=function(){if(!raf)raf=requestAnimationFrame(tick);};
   window.addEventListener('scroll',request,{passive:true});
   window.addEventListener('resize',request,{passive:true});

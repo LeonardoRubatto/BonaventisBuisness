@@ -115,10 +115,29 @@ html.js [data-reveal].in{opacity:1;transform:none}
 .nav__link--cta{font-weight:600;color:var(--coral);border-bottom:1px solid rgba(180,68,28,.34)}
 .nav__link--cta:hover{color:var(--ink);border-bottom-color:var(--ink)}
 .nav__lang{display:flex;align-items:center;gap:2px;font-size:13px;font-family:var(--mono);flex:none}
-.nav__lang a{padding:4px 6px;text-decoration:none;color:var(--ink-soft);border-radius:2px}
-.nav__lang a:hover{color:var(--ink)}
-.nav__lang a[aria-current="true"]{color:var(--ink);font-weight:700}
+.nav__lang a,.nav__lang-drop a{padding:4px 6px;text-decoration:none;color:var(--ink-soft);border-radius:2px;font-family:var(--mono)}
+.nav__lang a:hover,.nav__lang-drop a:hover{color:var(--ink)}
+.nav__lang a[aria-current="true"],.nav__lang-drop a[aria-current="true"]{color:var(--ink);font-weight:700}
 .nav__lang span{color:var(--cream-3)}
+
+/* ---- mobile language switcher ---------------------------------------------
+   On mobile, the language list is duplicated into a second copy
+   (.nav__lang-drop) that lives inside .nav__links itself, right after
+   Contact, behind its own little globe disclosure (.nav__lang-wrap) —
+   so the only thing sitting top-right on a phone is the single burger
+   icon, and language is one more row inside the menu it opens, not a
+   second control competing for the same corner. .nav__lang-wrap and
+   .nav__lang-drop are SIBLINGS (both children of .nav__links), for the
+   same <details>-hides-its-content reason documented above — the
+   disclosure only ever holds the current-language summary.
+   Desktop: both are hidden — .nav__lang (the original, unconditional
+   display:flex row above) is the only language control, unchanged,
+   top-right. */
+.nav__lang-wrap{display:none}
+.nav__lang-toggle{display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;list-style:none}
+.nav__lang-toggle::-webkit-details-marker{display:none}
+.nav__lang-toggle-icon{color:var(--ink-soft);flex:none}
+.nav__lang-drop{display:none}
 
 /* ---- buttons / links ---------------------------------------------------- */
 .link{font-size:14.5px;font-weight:600;color:var(--coral);text-decoration:none;border-bottom:1px solid rgba(180,68,28,.34);padding-bottom:3px;transition:color .28s ease,border-color .28s ease}
@@ -150,6 +169,13 @@ html.js [data-reveal].in{opacity:1;transform:none}
 /* ---- sections ------------------------------------------------------------*/
 .section{padding:clamp(56px,7vw,108px) 0}
 .section--tight{padding:clamp(40px,5vw,70px) 0}
+@media (max-width:759px){
+  /* on narrow viewports both clamps sit at their floor regardless of
+     section — a little more breathing room between stacked sections than
+     the desktop-tuned floor gives. */
+  .section{padding:clamp(72px,11vw,108px) 0}
+  .section--tight{padding:clamp(54px,9vw,70px) 0}
+}
 .section--dark{background:var(--ink);color:var(--cream)}
 .section--dark .body-serif{color:rgba(237,233,226,.78)}
 .section--dark .h2,.section--dark .h3{color:var(--cream)}
@@ -384,14 +410,27 @@ html.js [data-reveal].in{opacity:1;transform:none}
      site (FAQ rows, footer) rather than looking like a floating card. */
   .nav__links{display:none;position:absolute;top:100%;left:0;right:0;z-index:10;flex-direction:column;align-items:stretch;padding:6px 0 10px;background:var(--cream);border-bottom:1px solid var(--line)}
   .nav__toggle-wrap[open] ~ .nav__links{display:flex}
-  .nav__link{font-size:15px;padding:10px 4px;border-top:1px solid var(--line-soft)}
+  .nav__link{font-size:15px;padding:10px 4px;border-top:1px solid var(--line-soft);text-align:center}
+  /* the only thing top-right is the burger; language moves into the menu
+     it opens, as one more row after Contact — a globe + the current
+     language, tap to unfold the other two right there in place. */
+  .nav__lang{display:none}
+  .nav__lang-wrap{display:block;border-top:1px solid var(--line-soft)}
+  .nav__lang-toggle{font-size:15px;padding:10px 4px;color:var(--ink)}
+  .nav__lang-toggle-icon{width:14px;height:14px}
+  /* hidden until the row above is tapped; stacks as plain centered rows,
+     slightly recessed to read as belonging to the toggle above it rather
+     than a fourth, equal menu item. */
+  .nav__lang-drop{display:none;flex-direction:column;align-items:stretch;background:var(--cream-2)}
+  .nav__lang-wrap[open] ~ .nav__lang-drop{display:flex}
+  .nav__lang-drop span{display:none}
+  .nav__lang-drop a{text-align:center;padding:9px 4px;font-size:14px}
   /* minimum text sizes on small screens */
   .small,.eyebrow,.nav__link,.field span,.fact__k{font-size:13px}
-  .link,.btn,.nav__lang a,.faq summary{font-size:14px}
+  .link,.btn,.faq summary{font-size:14px}
   body{font-size:16px}
 }
 @media (max-width:520px){
-  .nav__lang{font-size:12px}
   .btn-row{gap:16px}
 }
 
