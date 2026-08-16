@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bonaventis — un site qui rend votre activité évidente</title>
+<meta name="description" content="Bonaventis transforme vos idées, vos textes et vos canaux dispersés en une présence claire, distinctive et entièrement à vous. Studio web indépendant. FR / EN / IT.">
+<link rel="canonical" href="https://bonaventis.com/">
+<link rel="alternate" hreflang="fr" href="https://bonaventis.com/">
+<link rel="alternate" hreflang="en" href="https://bonaventis.com/en/">
+<link rel="alternate" hreflang="it" href="https://bonaventis.com/it/">
+<link rel="alternate" hreflang="x-default" href="https://bonaventis.com/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#16202B">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Bonaventis">
+<meta property="og:url" content="https://bonaventis.com/">
+<meta property="og:title" content="Bonaventis — un site qui rend votre activité évidente">
+<meta property="og:description" content="Bonaventis transforme vos idées, vos textes et vos canaux dispersés en une présence claire, distinctive et entièrement à vous.">
+<meta property="og:image" content="https://bonaventis.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bonaventis — un site qui rend votre activité évidente.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="mask-icon" href="assets/mask-icon.svg" color="#16202B">
+<link rel="manifest" href="site.webmanifest">
+<meta name="msapplication-TileColor" content="#16202B">
+
+<link rel="stylesheet" href="assets/bonaventis.css?v=18">
+<!-- MOKA experiment (scroll-driven Atelier Moka case study) — delete this
+     <link>, the <section id="direction-lab">…</section> below, and the
+     matching <script> near </body> to remove it with zero effect on the
+     rest of the site. -->
+<link rel="stylesheet" href="assets/moka-lab.css?v=6">
+
+<!-- TODO Leonardo: ajouter SIRET / adresse / téléphone dès que ces informations
+     sont arrêtées — volontairement omis plutôt qu'inventé (voir mentions-legales.html). -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Bonaventis",
+  "description": "Studio web indépendant : transforme des idées, des textes et des canaux dispersés en une présence en ligne claire, distinctive et entièrement possédée par le client.",
+  "url": "https://bonaventis.com/",
+  "email": "hello@bonaventis.com",
+  "areaServed": "FR",
+  "availableLanguage": ["fr", "en", "it"],
+  "priceRange": "€€",
+  "founder": { "@type": "Person", "name": "Leonardo Rubatto" },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Services Bonaventis",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Créer une présence claire", "description": "Un site vitrine neuf, conçu et écrit de zéro, sans template." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Repenser l'existant", "description": "Audit et réécriture en statique d'un site existant, sans interruption de service." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Menu numérique & QR code pour restaurants", "description": "Carte de restaurant, café ou bar consultée via un QR code sur table, toujours à jour, sans application à installer." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Faire vivre le site", "description": "Suivi mensuel, modifications de contenu et surveillance de la mise en ligne." } }
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Pourquoi un site statique ?", "acceptedAnswer": { "@type": "Answer", "text": "Parce que c'est plus rapide à servir, plus robuste dans le temps et sans dépendance à un fournisseur. Il n'y a ni base de données ni extension à mettre à jour : le site fonctionne encore tel quel dans plusieurs années." } },
+    { "@type": "Question", "name": "Qui travaille sur mon site ?", "acceptedAnswer": { "@type": "Answer", "text": "Vous travaillez directement avec la personne qui définit, conçoit et construit votre site, du premier message à la mise en ligne." } },
+    { "@type": "Question", "name": "J'ai déjà un site — on repart de zéro ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. L'offre « Repenser l'existant » part de 1 200 € et s'ajuste selon l'existant : le contenu qui fonctionne est conservé, le reste est réécrit." } },
+    { "@type": "Question", "name": "En quelle langue peut-on travailler ?", "acceptedAnswer": { "@type": "Answer", "text": "En français, en anglais ou en italien — pour les échanges comme pour le contenu du site." } },
+    { "@type": "Question", "name": "Comment est-ce qu'on démarre ?", "acceptedAnswer": { "@type": "Answer", "text": "Par le formulaire de contact : votre activité, ce que le site doit faire, et un budget approximatif. Réponse écrite sous un jour ouvré." } }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header class="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href="index.html">BONAVENTIS</a>
+    <details class="nav__toggle-wrap">
+      <summary class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></summary>
+    </details>
+    <nav class="nav__links" aria-label="Principale">
+      <a class="nav__link" href="work.html">Travaux</a>
+      <a class="nav__link" href="studio.html">Studio</a>
+      <a class="nav__link" href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__lang" aria-label="Langue">
+      <a href="index.html" aria-current="true">FR</a><span aria-hidden="true">·</span><a href="en/index.html">EN</a><span aria-hidden="true">·</span><a href="it/index.html">IT</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero ------------------------------------------------------------- -->
+  <section class="hero">
+    <div class="wrap hero__in">
+      <div class="hero__copy" data-reveal>
+        <h1 class="h-hero" data-ink>Un site qui rend votre activité évidente&nbsp;? On vous le crée.</h1>
+        <p class="hero__lead">Bonaventis transforme vos idées, vos textes et vos canaux dispersés en une présence claire, distinctive et entièrement à vous.</p>
+      </div>
+    </div>
+    <div class="hero__band" aria-hidden="true" data-band>
+      <div class="hero__band-bottom hero__band-bottom--fill">
+        <img src="assets/art/cumulus03.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.42;mix-blend-mode:screen;filter:grayscale(.3) contrast(1.1);">
+      </div>
+      <div class="hero__band-top"><span class="hero__band-word">BONA<wbr>VENTIS</span></div>
+      <div class="hero__band-bottom"><span class="hero__band-word">BONA<wbr>VENTIS</span></div>
+    </div>
+  </section>
+
+  <section id="direction-lab" class="moka-story" data-moka-story>
+    <div class="moka-story__intro wrap">
+      <p class="eyebrow" data-reveal>Démonstration · Atelier Moka</p>
+      <h2 class="moka-story__title" data-ink data-reveal>Même activité. Autre perception.</h2>
+      <p class="lede moka-story__lede" data-reveal>Les mêmes informations. Mais cette fois, elles se rassemblent, trouvent une direction et deviennent une expérience.</p>
+      <p class="moka-story__scrollcue" aria-hidden="true"><span>Faites défiler</span><i></i></p>
+    </div>
+
+    <div class="moka-story__track">
+      <div class="moka-story__sticky">
+        <aside class="moka-story__rail" aria-hidden="true">
+          <span class="moka-story__rail-index">00</span>
+          <div class="moka-story__rail-line"><i data-moka-progress></i></div>
+          <span class="moka-story__rail-index">04</span>
+        </aside>
+
+        <div class="moka-story__phase" aria-hidden="true">
+          <span class="moka-story__phase-num" data-moka-phase-num>00</span>
+          <span class="moka-story__phase-name" data-moka-phase-name>Rassembler</span>
+        </div>
+
+        <div class="moka-story__canvas" data-moka-canvas aria-hidden="true">
+          <div class="moka-source-cloud" data-moka-sources>
+            <div class="moka-source moka-source--instagram" data-moka-fragment data-x="-330" data-y="-165" data-r="-5"><b>Instagram</b><span>Café de quartier · photos · stories</span></div>
+            <div class="moka-source moka-source--address" data-moka-fragment data-x="265" data-y="-205" data-r="4"><b>Adresse</b><span>18 rue des Lilas, Lyon</span></div>
+            <div class="moka-source moka-source--google" data-moka-fragment data-x="-390" data-y="90" data-r="3"><b>Google</b><span>Atelier Moka · 4,6 ★ · 128 avis</span></div>
+            <div class="moka-source moka-source--pdf" data-moka-fragment data-x="320" data-y="55" data-r="-4"><b>PDF</b><span>Carte_des_prix.pdf</span></div>
+            <div class="moka-source moka-source--hours" data-moka-fragment data-x="-175" data-y="230" data-r="-2"><b>Horaires</b><span>Ouvert 7j/7 · 7h–18h</span></div>
+            <div class="moka-source moka-source--email" data-moka-fragment data-x="250" data-y="220" data-r="2"><b>Email</b><span>contact@ateliermoka.fr</span></div>
+          </div>
+
+          <div class="moka-browser" data-moka-browser>
+            <div class="moka-browser__bar">
+              <span class="moka-browser__mark">ATELIER MOKA</span>
+              <span class="moka-browser__url">ateliermoka.fr</span>
+              <span class="moka-browser__menu">Carte &nbsp; Le lieu &nbsp; Horaires</span>
+            </div>
+            <div class="moka-browser__viewport" data-moka-viewport>
+              <div class="moka-page" data-moka-page>
+                <section class="moka-page__hero">
+                  <picture class="moka-page__hero-image">
+      <source type="image/avif" srcset="assets/moka/atelier-moka-storefront-640.avif 640w, assets/moka/atelier-moka-storefront-960.avif 960w, assets/moka/atelier-moka-storefront-1536.avif 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <source type="image/webp" srcset="assets/moka/atelier-moka-storefront-640.webp 640w, assets/moka/atelier-moka-storefront-960.webp 960w, assets/moka/atelier-moka-storefront-1536.webp 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <img src="assets/moka/atelier-moka-storefront-960.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+    </picture>
+                  <div class="moka-page__hero-shade"></div>
+                  <div class="moka-page__hero-copy">
+                    <p>Torréfié ici · servi ici</p>
+                    <h3>Un café de quartier qui mérite mieux qu’un PDF et trois liens.</h3>
+                    <span>Voir la carte <b>↘</b></span>
+                  </div>
+                  <div class="moka-page__hero-side"><span>ATELIER</span><strong>MOKA</strong></div>
+                </section>
+
+                <section class="moka-page__statement">
+                  <p>18 rue des Lilas · Lyon</p>
+                  <h3>Le café devient un lieu. Le lieu devient une marque.</h3>
+                </section>
+
+                <section class="moka-page__gallery">
+                  <div class="moka-page__gallery-main"><picture class="moka-media">
+      <source type="image/avif" srcset="assets/moka/atelier-moka-interior-wide-640.avif 640w, assets/moka/atelier-moka-interior-wide-960.avif 960w, assets/moka/atelier-moka-interior-wide-1536.avif 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <source type="image/webp" srcset="assets/moka/atelier-moka-interior-wide-640.webp 640w, assets/moka/atelier-moka-interior-wide-960.webp 960w, assets/moka/atelier-moka-interior-wide-1536.webp 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <img src="assets/moka/atelier-moka-interior-wide-960.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+    </picture></div>
+                  <div class="moka-page__gallery-copy"><p>À l’intérieur</p><h3>Du café, de la lumière, rien à cacher.</h3></div>
+                  <div class="moka-page__gallery-small moka-page__gallery-small--coffee"><picture class="moka-media">
+      <source type="image/avif" srcset="assets/moka/atelier-moka-coffee-detail-640.avif 640w, assets/moka/atelier-moka-coffee-detail-960.avif 960w, assets/moka/atelier-moka-coffee-detail-1536.avif 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <source type="image/webp" srcset="assets/moka/atelier-moka-coffee-detail-640.webp 640w, assets/moka/atelier-moka-coffee-detail-960.webp 960w, assets/moka/atelier-moka-coffee-detail-1536.webp 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <img src="assets/moka/atelier-moka-coffee-detail-960.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+    </picture></div>
+                  <div class="moka-page__gallery-small moka-page__gallery-small--action"><picture class="moka-media">
+      <source type="image/avif" srcset="assets/moka/atelier-moka-counter-action-640.avif 640w, assets/moka/atelier-moka-counter-action-960.avif 960w, assets/moka/atelier-moka-counter-action-1536.avif 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <source type="image/webp" srcset="assets/moka/atelier-moka-counter-action-640.webp 640w, assets/moka/atelier-moka-counter-action-960.webp 960w, assets/moka/atelier-moka-counter-action-1536.webp 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <img src="assets/moka/atelier-moka-counter-action-960.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+    </picture></div>
+                  <div class="moka-page__material"><picture class="moka-media">
+      <source type="image/avif" srcset="assets/moka/atelier-moka-material-detail-640.avif 640w, assets/moka/atelier-moka-material-detail-960.avif 960w, assets/moka/atelier-moka-material-detail-1536.avif 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <source type="image/webp" srcset="assets/moka/atelier-moka-material-detail-640.webp 640w, assets/moka/atelier-moka-material-detail-960.webp 960w, assets/moka/atelier-moka-material-detail-1536.webp 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <img src="assets/moka/atelier-moka-material-detail-960.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+    </picture></div>
+                </section>
+
+                <section class="moka-page__useful">
+                  <div class="moka-page__useful-copy">
+                    <p>Simplement utile</p>
+                    <h3>La carte, les horaires, l’adresse. Là où on les cherche.</h3>
+                    <div class="moka-page__facts"><span>Tous les jours<strong>07:00 — 18:00</strong></span><span>Adresse<strong>18 rue des Lilas · Lyon</strong></span></div>
+                  </div>
+                  <div class="moka-page__pastries"><picture class="moka-media">
+      <source type="image/avif" srcset="assets/moka/atelier-moka-pastries-640.avif 640w, assets/moka/atelier-moka-pastries-960.avif 960w, assets/moka/atelier-moka-pastries-1536.avif 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <source type="image/webp" srcset="assets/moka/atelier-moka-pastries-640.webp 640w, assets/moka/atelier-moka-pastries-960.webp 960w, assets/moka/atelier-moka-pastries-1536.webp 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <img src="assets/moka/atelier-moka-pastries-960.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+    </picture></div>
+                  <div class="moka-page__menu-photo"><picture class="moka-media">
+      <source type="image/avif" srcset="assets/moka/atelier-moka-table-menu-640.avif 640w, assets/moka/atelier-moka-table-menu-960.avif 960w, assets/moka/atelier-moka-table-menu-1536.avif 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <source type="image/webp" srcset="assets/moka/atelier-moka-table-menu-640.webp 640w, assets/moka/atelier-moka-table-menu-960.webp 960w, assets/moka/atelier-moka-table-menu-1536.webp 1536w" sizes="(min-width: 1000px) 70vw, 94vw">
+      <img src="assets/moka/atelier-moka-table-menu-960.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+    </picture></div>
+                </section>
+
+                <footer class="moka-page__owned">
+                  <p>ateliermoka.fr</p>
+                  <h3>Votre domaine. Vos contenus. Votre code.</h3>
+                  <span>ATELIER MOKA · LYON</span>
+                </footer>
+              </div>
+            </div>
+          </div>
+
+          <div class="moka-story__endcard" data-moka-endcard>
+            <span>ateliermoka.fr</span>
+            <p>Même activité. Une présence qui donne envie d’entrer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clarify: Atelier Moka is a fictional example, not the only kind of client -->
+  <section class="section--tight section--sunk">
+    <div class="wrap center">
+      <p class="small" style="font-family:var(--mono);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin:0 0 10px;">Exemple fictif</p>
+      <p class="small" style="max-width:62ch;margin:0 auto;line-height:1.75;">Atelier Moka montre une transformation de bout en bout, mais Bonaventis ne travaille pas exclusivement avec des bars, cafés ou commerces : la même méthode s'applique aussi bien à une entreprise qu'à un outil en ligne simplifié — comme les projets ci-dessous.</p>
+    </div>
+  </section>
+
+  <!-- 01 Selected work ------------------------------------------------------ -->
+  <section class="section" id="selected-work">
+    <div class="wrap">
+      <div class="head-row" data-reveal>
+        <span class="eyebrow">01</span>
+        <h2 class="h2">Quelques projets, expliqués clairement.</h2>
+      </div>
+
+      <article class="proj" data-reveal>
+        <div style="min-width:0;">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+            <span class="proj__num">01</span>
+            <span class="proj__tag">Association étudiante</span>
+          </div>
+          <h3 class="h2" style="font-size:clamp(23px,2.5vw,33px);">BDE Dauphine</h3>
+          <p class="body-serif" style="margin-top:14px;max-width:440px;font-size:16.5px;">Le problème : une billetterie et un programme d'événements que personne ne retrouvait sur l'ancien site.</p>
+          <p class="body-serif" style="margin-top:8px;max-width:440px;font-size:16.5px;">La réponse : un accès direct à la billetterie dès l'écran d'accueil, pensé d'abord pour le téléphone.</p>
+          <div class="btn-row" style="margin-top:20px;">
+            <a class="link" href="project-bde.html">Voir l'étude de cas &rarr;</a>
+            <a class="link link--plain" href="https://bde-sitetest.pages.dev" target="_blank" rel="noopener">bde-sitetest.pages.dev &#8599;</a>
+          </div>
+        </div>
+        <div class="proj__shot-wrap">
+          <picture>
+            <source type="image/avif" srcset="assets/shots/bde-960.avif 960w, assets/shots/bde-1600.avif 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <source type="image/webp" srcset="assets/shots/bde-960.webp 960w, assets/shots/bde-1600.webp 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <img class="proj__shot" src="assets/shots/bde.png" width="1600" height="820" alt="Page d'accueil du site BDE Dauphine" loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </article>
+
+      <article class="proj" data-reveal>
+        <div class="proj__shot-wrap" style="order:2;">
+          <picture>
+            <source type="image/avif" srcset="assets/shots/qualamantis-960.avif 960w, assets/shots/qualamantis-1600.avif 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <source type="image/webp" srcset="assets/shots/qualamantis-960.webp 960w, assets/shots/qualamantis-1600.webp 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <img class="proj__shot" src="assets/shots/qualamantis.png" width="1600" height="826" alt="Page d'accueil du site Qualamantis" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div style="min-width:0;order:1;">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+            <span class="proj__num">02</span>
+            <span class="proj__tag">Conseil en qualité industrielle · 3 langues</span>
+          </div>
+          <h3 class="h2" style="font-size:clamp(23px,2.5vw,33px);">Qualamantis</h3>
+          <p class="body-serif" style="margin-top:14px;max-width:440px;font-size:16.5px;">Le problème : une expertise technique difficile à comprendre pour un public non spécialiste, à décliner en trois langues.</p>
+          <p class="body-serif" style="margin-top:8px;max-width:440px;font-size:16.5px;">La réponse : une hiérarchie éditoriale qui pose l'enjeu avant le jargon, sans dupliquer la mise en page par langue.</p>
+          <div class="btn-row" style="margin-top:20px;">
+            <a class="link" href="project-qualamantis.html">Voir l'étude de cas &rarr;</a>
+            <a class="link link--plain" href="https://qualamantis.com" target="_blank" rel="noopener">qualamantis.com &#8599;</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj" data-reveal>
+        <div style="min-width:0;">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+            <span class="proj__num">03</span>
+            <span class="proj__tag">Outil en ligne</span>
+          </div>
+          <h3 class="h2" style="font-size:clamp(23px,2.5vw,33px);">wecalc.fr</h3>
+          <p class="body-serif" style="margin-top:14px;max-width:440px;font-size:16.5px;">Le problème : des calculateurs disponibles en ligne, mais saturés de publicité et de traceurs.</p>
+          <p class="body-serif" style="margin-top:8px;max-width:440px;font-size:16.5px;">La réponse : un résultat qui apparaît au fil de la frappe, sans compte à créer et sans script tiers.</p>
+          <div class="btn-row" style="margin-top:20px;">
+            <a class="link" href="project-wecalc.html">Voir l'étude de cas &rarr;</a>
+            <a class="link link--plain" href="https://wecalc.fr" target="_blank" rel="noopener">wecalc.fr &#8599;</a>
+          </div>
+        </div>
+        <div class="proj__shot-wrap">
+          <picture>
+            <source type="image/avif" srcset="assets/shots/wecalc-960.avif 960w, assets/shots/wecalc-1600.avif 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <source type="image/webp" srcset="assets/shots/wecalc-960.webp 960w, assets/shots/wecalc-1600.webp 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <img class="proj__shot" src="assets/shots/wecalc.png" width="1600" height="892" alt="Page d'accueil du site wecalc.fr" loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </article>
+
+      <p style="margin-top:clamp(30px,4vw,48px);"><a class="link" href="work.html">Voir tous les travaux &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- 02 Services & pricing -------------------------------------------------- -->
+  <section class="section section--tight section--panel">
+    <div class="wrap">
+      <div class="head-row" data-reveal>
+        <span class="eyebrow">02</span>
+        <h2 class="h2">Trois façons de travailler ensemble</h2>
+      </div>
+      <div class="grid grid-cards" data-reveal>
+        <div class="pcard">
+          <h3 class="h3">Créer une présence claire</h3>
+          <p class="body-serif" style="margin-top:8px;">Un nouveau site pour expliquer votre activité, structurer votre offre et orienter le visiteur vers la bonne action.</p>
+          <div class="pcard__price">À partir de 900 €</div>
+          <ul class="pcard__list">
+            <li>Arborescence et contenu structurés avec vous</li>
+            <li>Design sur mesure, jamais un template</li>
+            <li>Pensé mobile d'abord — aussi lisible sur téléphone que sur ordinateur</li>
+            <li>Intégration HTML / CSS / JS à la main</li>
+            <li>Mise en ligne sur Cloudflare Pages</li>
+          </ul>
+          <a class="link" href="contact.html">Demander un devis &rarr;</a>
+        </div>
+        <div class="pcard pcard--outline">
+          <h3 class="h3">Repenser l'existant</h3>
+          <p class="body-serif" style="margin-top:8px;">Conserver ce qui fonctionne, supprimer ce qui brouille le message et reconstruire une expérience plus claire.</p>
+          <div class="pcard__price" style="margin-bottom:6px;">À partir de 1 200 €</div>
+          <p class="pcard__note">selon le nombre de pages, le contenu et les langues — le prix suit l'ampleur réelle du travail</p>
+          <ul class="pcard__list">
+            <li>Lecture de l'existant : contenu, structure, code</li>
+            <li>Réécriture en statique, sans CMS</li>
+            <li>Reprise du contenu et des adresses de pages</li>
+            <li>Bascule sans interruption de service</li>
+          </ul>
+          <a class="link" href="contact.html">Faire estimer mon site &rarr;</a>
+        </div>
+        <div class="pcard">
+          <h3 class="h3">Faire vivre le site</h3>
+          <p class="body-serif" style="margin-top:8px;">Mettre à jour les contenus, surveiller la mise en ligne et faire évoluer le site sans engagement de durée.</p>
+          <div class="pcard__price">45 € <span style="font-size:13px;font-weight:500;color:var(--ink-soft);">/ mois</span></div>
+          <ul class="pcard__list">
+            <li>Modifications de contenu et de pages</li>
+            <li>Surveillance de la mise en ligne</li>
+            <li>Historique complet dans Git</li>
+            <li>Sans engagement de durée</li>
+          </ul>
+          <a class="link" href="contact.html">En parler &rarr;</a>
+        </div>
+      </div>
+      <p class="small" style="margin-top:clamp(28px,4vw,40px);padding-top:18px;border-top:1px solid var(--line-soft);max-width:58ch;line-height:1.7;">Le périmètre est toujours fixé par écrit avant de commencer — le prix suit le nombre réel de pages, de langues et de fonctionnalités. Prix hors nom de domaine.</p>
+    </div>
+  </section>
+
+  <!-- Digital menu cross-sell ---------------------------------------------- -->
+  <section class="section--tight section--sunk">
+    <div class="wrap menu-cta" data-reveal>
+      <div class="menu-cta__copy">
+        <span class="eyebrow">Aussi pour la restauration</span>
+        <h2 class="h3" style="margin:10px 0 0;">Un menu numérique, affiché via un QR code sur chaque table.</h2>
+        <p class="body-serif" style="margin-top:8px;max-width:52ch;">Même principe qu'un site une page, appliqué à la carte d'un restaurant, café ou bar : toujours à jour, sans application à installer.</p>
+      </div>
+      <a class="btn" href="menu-numerique.html">Voir la solution &rarr;</a>
+    </div>
+  </section>
+
+  <!-- 03 Direct collaboration / Studio ---------------------------------------- -->
+  <section class="section section--panel">
+    <div class="wrap split split--wide-right" style="--split-right:1.2fr;">
+      <div data-reveal>
+        <span class="eyebrow">03 — LE STUDIO</span>
+        <h2 class="h2" style="margin:16px 0 0;max-width:460px;">Un seul interlocuteur, du premier message à la mise en ligne.</h2>
+      </div>
+      <div data-reveal>
+        <p class="lede" style="max-width:560px;padding-left:20px;border-left:2px solid var(--coral);">Vous travaillez directement avec la personne qui définit, conçoit et construit votre site.</p>
+        <div class="grid steps" style="margin-top:26px;">
+          <div class="step"><span class="step__n">01</span><span class="step__t" style="margin:8px 0 0;font-size:15px;">Comprendre</span></div>
+          <div class="step"><span class="step__n">02</span><span class="step__t" style="margin:8px 0 0;font-size:15px;">Structurer</span></div>
+          <div class="step"><span class="step__n">03</span><span class="step__t" style="margin:8px 0 0;font-size:15px;">Concevoir</span></div>
+          <div class="step"><span class="step__n">04</span><span class="step__t" style="margin:8px 0 0;font-size:15px;">Mettre en ligne</span></div>
+        </div>
+        <a class="link" style="display:inline-block;margin-top:26px;" href="studio.html">La façon de travailler &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Technical reassurance ------------------------------------------------- -->
+  <section class="section section--dark">
+    <div class="wrap">
+      <div class="head-row" data-reveal>
+        <span class="eyebrow" style="color:var(--coral-2);">04</span>
+        <h2 class="h2" style="color:var(--cream);">Ce que ça change concrètement</h2>
+      </div>
+      <div class="grid grid-benefits" data-reveal>
+        <div class="benefit">
+          <div class="benefit__mark"></div>
+          <h3 class="benefit__title">Rapide à charger</h3>
+          <p class="benefit__text">Une architecture légère, sans dépendances inutiles.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit__mark benefit__mark--ring"></div>
+          <h3 class="benefit__title">Simple à reprendre</h3>
+          <p class="benefit__text">Des fichiers lisibles, documentés et versionnés.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit__mark benefit__mark--rot"></div>
+          <h3 class="benefit__title">Entièrement à vous</h3>
+          <p class="benefit__text">Votre domaine, vos contenus et le code complet.</p>
+        </div>
+      </div>
+      <p class="small" style="margin-top:24px;color:rgba(237,233,226,.6);">Un site bien construit demande, comme tout logiciel, un entretien occasionnel — ce suivi est justement l'objet de l'offre « Faire vivre le site ».</p>
+    </div>
+  </section>
+
+  <!-- FAQ ----------------------------------------------------------------- -->
+  <section class="section section--tight section--sunk">
+    <div class="wrap split split--wide-right" style="--split-right:1.6fr;">
+      <h2 class="h2" data-reveal>Questions<br>fréquentes</h2>
+      <div class="faq" data-reveal>
+        <details>
+          <summary>Pourquoi un site statique ?</summary>
+          <p>Parce que c'est plus rapide à servir, plus robuste dans le temps et sans dépendance à un fournisseur. Il n'y a ni base de données ni extension à mettre à jour : le site fonctionne encore tel quel dans plusieurs années.</p>
+        </details>
+        <details>
+          <summary>Qui travaille sur mon site ?</summary>
+          <p>Vous travaillez directement avec la personne qui définit, conçoit et construit votre site, du premier message à la mise en ligne.</p>
+        </details>
+        <details>
+          <summary>J'ai déjà un site — on repart de zéro ?</summary>
+          <p>Non. L'offre « Repenser l'existant » part de 1 200 € et s'ajuste selon l'existant : le contenu qui fonctionne est conservé, le reste est réécrit.</p>
+        </details>
+        <details>
+          <summary>En quelle langue peut-on travailler ?</summary>
+          <p>En français, en anglais ou en italien — pour les échanges comme pour le contenu du site.</p>
+        </details>
+        <details>
+          <summary>Comment est-ce qu'on démarre ?</summary>
+          <p>Par le formulaire de contact : votre activité, ce que le site doit faire, et un budget approximatif. Réponse écrite sous un jour ouvré.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact banner --------------------------------------------------------- -->
+  <section class="section--dark" style="position:relative;overflow:hidden;">
+    <img src="assets/art/cafe-delight.jpg" alt="" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 55%;opacity:.4;">
+    <div style="position:absolute;inset:0;background:linear-gradient(102deg,rgba(22,32,43,.95) 15%,rgba(22,32,43,.85) 58%,rgba(22,32,43,.77) 100%);"></div>
+    <div class="wrap" style="position:relative;z-index:2;padding-top:clamp(60px,8vw,110px);padding-bottom:clamp(60px,8vw,110px);">
+      <p class="eyebrow" style="color:var(--coral-2);">05 — CONTACT</p>
+      <h2 class="h-page" data-reveal style="margin-top:20px;font-size:clamp(32px,5.8vw,72px);color:var(--cream);max-width:900px;">Dites ce que votre site doit faire.</h2>
+      <p class="body-serif" style="margin-top:22px;max-width:540px;color:rgba(237,233,226,.84);">Quelques lignes suffisent pour commencer : votre activité, ce que vous vendez, et à qui. Réponse écrite sous un jour ouvré.</p>
+      <div class="btn-row" style="margin-top:32px;">
+        <a class="btn" href="contact.html">Prendre contact &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <div class="foot__brand">BONAVENTIS</div>
+      <p class="foot__desc">Studio web indépendant. Des sites écrits à la main, en France.</p>
+    </div>
+    <div class="foot__col">
+      <a href="work.html">Travaux</a>
+      <a href="studio.html">Studio</a>
+      <a href="contact.html">Contact</a>
+      <a href="menu-numerique.html">Menu numérique</a>
+    </div>
+    <div class="foot__col">
+      <a class="foot__mono" href="https://bde-sitetest.pages.dev" target="_blank" rel="noopener">bde-sitetest.pages.dev &#8599;</a>
+      <a class="foot__mono" href="https://qualamantis.com" target="_blank" rel="noopener">qualamantis.com &#8599;</a>
+      <a class="foot__mono" href="https://wecalc.fr" target="_blank" rel="noopener">wecalc.fr &#8599;</a>
+    </div>
+    <div>
+      <p class="foot__langs">FR · EN · IT</p>
+      <a class="link" style="color:rgba(237,233,226,.7);border-color:rgba(237,233,226,.2);" href="mentions-legales.html">Mentions légales &amp; crédits</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/bonaventis.js?v=5" defer></script>
+<!-- MOKA experiment — remove this line together with the CSS <link> and
+     the #direction-lab section to deactivate it. -->
+<script src="assets/moka-lab.js?v=6" defer></script>
+</body>
+</html>

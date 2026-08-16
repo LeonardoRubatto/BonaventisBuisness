@@ -1,0 +1,412 @@
+/* Bonaventis — shared stylesheet.
+   Design language carried over from the Bonaventis.dc.html source: ink navy
+   (#16202B), warm cream (#EDE9E2), coral accent (#B4441C / #E0742F), Archivo
+   for text, Source Serif 4 for longer-form copy. Rebuilt here as plain,
+   dependency-free CSS + real HTML pages instead of the original templated
+   single-file component. */
+
+/* ---- self-hosted fonts ---------------------------------------------------
+   Archivo & Source Serif 4, official variable-font files pulled from Google
+   Fonts' own CDN (fonts.gstatic.com) — latin + latin-ext subsets only, which
+   cover French, English and Italian. No request leaves the visitor's browser
+   for typography. Licence: SIL Open Font License 1.1, see assets/fonts/. */
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:400 800;font-stretch:100% 125%;font-display:swap;
+  src:url('fonts/archivo-latin-ext.woff2') format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:400 800;font-stretch:100% 125%;font-display:swap;
+  src:url('fonts/archivo-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Source Serif 4';font-style:normal;font-weight:300 600;font-display:swap;
+  src:url('fonts/sourceserif4-latin-ext.woff2') format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:'Source Serif 4';font-style:normal;font-weight:300 600;font-display:swap;
+  src:url('fonts/sourceserif4-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+:root{
+  --ink:#16202B;
+  --ink-soft:#4A5560;
+  --cream:#EDE9E2;
+  --cream-2:#E7E2DA;
+  --cream-3:#DAD3C8;
+  --coral:#B4441C;
+  --coral-2:#E0742F;
+  --coral-ink:#8A3616;
+  --line:rgba(22,32,43,.18);
+  --line-soft:rgba(22,32,43,.12);
+  --line-dark:rgba(237,233,226,.18);
+  --sans:'Archivo',Helvetica,Arial,sans-serif;
+  --serif:'Source Serif 4',Georgia,serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,p,dl,dd{margin:0}
+ul{margin:0;padding:0}
+::selection{background:var(--ink);color:var(--cream)}
+summary{list-style:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--cream);padding:10px 16px;z-index:100}
+.skip:focus{left:12px;top:12px}
+
+/* ---- focus visibility ---------------------------------------------------- */
+:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+.section--dark :focus-visible,.foot :focus-visible,.hero__band :focus-visible{outline-color:var(--coral-2)}
+
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,80px)}
+
+[data-ink]{background-repeat:no-repeat}
+
+/* ---- progressive-enhancement reveal --------------------------------------
+   Content is visible by default (no JavaScript, JS failure, print, crawlers).
+   bonaventis.js adds .js to <html> before paint; only then do [data-reveal]
+   groups start hidden so they can animate in. If JS never runs, nothing is
+   ever hidden. Applied to a handful of major narrative groups only — not to
+   every card. */
+[data-reveal]{opacity:1;transform:none}
+html.js [data-reveal]{opacity:0;transform:translateY(12px);transition:opacity .5s cubic-bezier(.22,.9,.24,1),transform .5s cubic-bezier(.22,.9,.24,1)}
+html.js [data-reveal].in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html.js [data-reveal]{opacity:1!important;transform:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+@media print{
+  [data-reveal]{opacity:1!important;transform:none!important;transition:none!important}
+}
+
+/* ---- header / nav ------------------------------------------------------ */
+.nav{position:sticky;top:0;z-index:40;background:rgba(237,233,226,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav__in{max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,80px);min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.nav__brand{font-weight:800;font-size:15px;letter-spacing:.15em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.nav__links{display:flex;align-items:center;gap:clamp(12px,2.2vw,26px);flex-wrap:wrap}
+.nav__link{font-size:13.5px;font-weight:500;color:var(--ink);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;white-space:nowrap}
+
+/* ---- mobile menu toggle ---------------------------------------------------
+   A native <details>/<summary> disclosure (same pattern as the FAQ) rather
+   than a JS-only show/hide: no JavaScript required, natively keyboard- and
+   screen-reader-accessible, no ARIA state management needed.
+   .nav__links is a SIBLING of the <details>, not its content — <details>
+   hides non-summary content natively whenever it's closed, at the browser
+   level, in a way plain CSS (display, visibility, even !important) cannot
+   override; nesting the real nav inside it made the whole desktop nav
+   uninteractable except while the (mobile-only) disclosure happened to be
+   open. Using <details> purely as a state-holder for the icon and reaching
+   the menu via a sibling combinator sidesteps that entirely — the menu's
+   visibility is 100% ordinary author CSS, gated by [open] like any other
+   toggle. On desktop the toggle-wrap is neutralised via display:contents
+   and its button hidden, so .nav__links (always display:flex) is the only
+   thing that renders — unchanged above 760px. */
+.nav__toggle-wrap{display:contents}
+.nav__toggle{display:none}
+.nav__link:hover{border-bottom-color:var(--ink)}
+.nav__link--cta{font-weight:600;color:var(--coral);border-bottom:1px solid rgba(180,68,28,.34)}
+.nav__link--cta:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.nav__lang{display:flex;align-items:center;gap:2px;font-size:13px;font-family:var(--mono);flex:none}
+.nav__lang a{padding:4px 6px;text-decoration:none;color:var(--ink-soft);border-radius:2px}
+.nav__lang a:hover{color:var(--ink)}
+.nav__lang a[aria-current="true"]{color:var(--ink);font-weight:700}
+.nav__lang span{color:var(--cream-3)}
+
+/* ---- buttons / links ---------------------------------------------------- */
+.link{font-size:14.5px;font-weight:600;color:var(--coral);text-decoration:none;border-bottom:1px solid rgba(180,68,28,.34);padding-bottom:3px;transition:color .28s ease,border-color .28s ease}
+.link:hover{color:var(--ink);border-color:var(--ink)}
+.link--plain{color:var(--ink-soft);border-color:var(--line);font-family:var(--mono);font-size:12px;font-weight:400}
+.link--plain:hover{color:var(--ink);border-color:var(--ink)}
+.btn{display:inline-block;background:var(--coral);color:var(--cream);text-decoration:none;font-size:15px;font-weight:600;padding:15px 25px;border:0;font-family:inherit;cursor:pointer;transition:background .3s ease,color .3s ease,transform .3s cubic-bezier(.22,.9,.24,1)}
+.btn:hover{background:var(--ink);transform:translateY(-2px)}
+.btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn--ghost:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.btn-row{display:flex;flex-wrap:wrap;gap:24px;align-items:center}
+
+/* ---- type ---------------------------------------------------------------*/
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--coral)}
+.h-hero{margin:0;font-size:clamp(29px,4vw,58px);font-weight:700;line-height:1.03;letter-spacing:-.035em;text-wrap:balance}
+/* ---- mobile-only stacked wordmark ("BONA" / "VENTIS") --------------------
+   The desktop diagonal-split band doesn't work as a poster-scale mark at
+   narrow widths, so under 760px it's replaced by two big stacked lines
+   filling the base of the hero instead — same wordmark, different device. */
+.hero__stack{display:none}
+.h-page{margin:0;font-size:clamp(34px,6vw,84px);font-weight:800;letter-spacing:-.045em;line-height:.95;text-wrap:balance}
+.h2{margin:0;font-size:clamp(25px,3.1vw,42px);font-weight:700;letter-spacing:-.03em}
+.h3{margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em}
+.lede{font-family:var(--serif);font-size:clamp(16.5px,1.3vw,19.5px);line-height:1.62;color:var(--ink-soft)}
+.body-serif{font-family:var(--serif);font-size:15.5px;line-height:1.6;color:var(--ink-soft)}
+.small{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.measure{max-width:56ch}
+
+/* ---- sections ------------------------------------------------------------*/
+.section{padding:clamp(56px,7vw,108px) 0}
+.section--tight{padding:clamp(40px,5vw,70px) 0}
+.section--dark{background:var(--ink);color:var(--cream)}
+.section--dark .body-serif{color:rgba(237,233,226,.78)}
+.section--dark .h2,.section--dark .h3{color:var(--cream)}
+.section--panel{background:var(--cream-2)}
+.section--sunk{background:var(--cream-2);border-top:1px solid var(--line-soft)}
+
+/* ---- cross-sell banner (e.g. homepage digital-menu callout) ---------------
+   A sober header + one line + one CTA, reused wherever a secondary offer
+   needs a real section rather than a buried inline link. */
+.menu-cta{display:flex;flex-wrap:wrap;gap:20px 24px;align-items:center;justify-content:space-between}
+.menu-cta__copy{flex:1 1 380px;min-width:0}
+.menu-cta .btn{flex:0 0 auto}
+@media (max-width:759px){
+  .menu-cta{flex-direction:column;align-items:stretch}
+  .menu-cta .btn{width:100%;text-align:center}
+}
+
+.head-row{display:flex;align-items:baseline;gap:16px;margin-bottom:clamp(32px,4vw,52px)}
+
+/* ---- hero ---------------------------------------------------------------*/
+.hero{position:relative;overflow:hidden;background:var(--cream);min-height:clamp(440px,68vh,720px);display:flex;flex-direction:column}
+.hero__in{position:relative;z-index:2;padding-top:clamp(40px,6vw,84px);padding-bottom:clamp(30px,4vw,50px)}
+.hero__copy{max-width:640px}
+.hero__lead{margin:22px 0 0;max-width:510px;font-family:var(--serif);font-size:clamp(16.5px,1.3vw,19.5px);line-height:1.62;color:var(--ink-soft)}
+.hero__note{margin-top:32px}
+.hero__note-line{margin-top:20px}
+/* split wordmark — full desktop impact preserved; only the mobile floor is
+   lowered so the word can never overflow a narrow viewport (that was a
+   padding bug elsewhere, not a reason to shrink the desktop mark). */
+.hero__band{position:relative;margin-top:auto;width:100%;overflow:hidden;font-size:clamp(40px,14.6vw,238px);height:.78em}
+.hero__band-word{position:absolute;left:-1.2vw;top:0;white-space:nowrap;font-size:1em;font-weight:800;letter-spacing:-.05em;line-height:.78;color:var(--cream)}
+.hero__band-top{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,100% 16%,0 72%)}
+.hero__band-top .hero__band-word{color:var(--ink)}
+.hero__band-bottom{position:absolute;inset:0;clip-path:polygon(0 72%,100% 16%,100% 100%,0 100%);overflow:hidden}
+.hero__band-bottom--fill{background:var(--ink)}
+
+@media (max-width:759px){
+  .h-hero{font-size:clamp(38px,11.5vw,58px)}
+  /* exact same component as desktop (same clip-path split, same two-tone
+     ink/cream treatment) — the only difference is the word is allowed to
+     wrap at the single break point marked in the markup (BONA<wbr>VENTIS),
+     and the container is twice as tall to fit two lines instead of one.
+     Nothing else about the effect changes. */
+  .hero__band{height:1.56em;font-size:27.3vw}
+  .hero__band-word{white-space:normal;width:100%}
+}
+
+/* ---- page header (non-home) ---------------------------------------------*/
+.page-head{position:relative;overflow:hidden;background:var(--cream)}
+.page-head__wedge{position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 100%,100% 58%,100% 100%,0 100%);overflow:hidden;transform:translateZ(0)}
+.page-head__in{position:relative;z-index:2;padding-top:clamp(52px,7vw,96px);padding-bottom:clamp(74px,9vw,130px)}
+.page-head--split .page-head__wedge{clip-path:polygon(0 100%,100% 60%,100% 100%,0 100%)}
+/* the wedge's clip-path can leave a hairline of the cream background
+   showing at the seam with whatever section follows (a sub-pixel rounding
+   artifact of compositing an absolutely-positioned clipped layer) — a 1px
+   pull-up on the next section masks it completely without visible effect */
+.page-head + section{margin-top:-1px}
+
+/* ---- responsive split layouts ---------------------------------------------
+   Replaces one-off inline grid-template-columns declarations. Desktop keeps
+   the intended column ratio (tune per-instance with the --split-left /
+   --split-right custom properties); below 760px every split collapses to a
+   single column, and no column is ever allowed to shrink under ~280px while
+   two columns are still shown. */
+.split{display:grid;gap:var(--split-gap,clamp(26px,4vw,76px));align-items:start}
+.split--equal{grid-template-columns:repeat(2,minmax(280px,1fr))}
+.split--wide-right{grid-template-columns:minmax(280px,1fr) minmax(280px,var(--split-right,1.3fr))}
+.split--wide-left{grid-template-columns:minmax(280px,var(--split-left,1.3fr)) minmax(280px,1fr)}
+
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:16px}
+
+.case-study-grid{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:clamp(28px,4vw,76px);align-items:start}
+
+@media (max-width:760px){
+  .split,.split--equal,.split--wide-right,.split--wide-left,.form-grid,.case-study-grid{grid-template-columns:1fr}
+  /* opt-in: once a two-column split collapses to one column, mark the seam
+     between the two halves instead of letting them run together as one
+     unbroken block of text */
+  .split--divided > :nth-child(2){margin-top:6px;padding-top:clamp(28px,6vw,40px);border-top:1px solid var(--line-soft)}
+}
+
+/* ---- benefit grid ---------------------------------------------------------*/
+.grid{display:grid}
+.grid-benefits{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(237,233,226,.16);border:1px solid rgba(237,233,226,.16)}
+.benefit{background:var(--ink);padding:clamp(24px,2.5vw,36px);min-width:0}
+.benefit__mark{width:10px;height:10px;background:var(--coral-2);margin-bottom:20px}
+.benefit__mark--ring{background:none;border:2px solid var(--coral-2)}
+.benefit__mark--dot{border-radius:50%}
+.benefit__mark--rot{transform:rotate(45deg)}
+.benefit__title{margin:0 0 10px;font-size:16.5px;font-weight:600;color:var(--cream)}
+.benefit__text{margin:0;font-family:var(--serif);font-size:15.5px;line-height:1.6;color:rgba(237,233,226,.72)}
+
+/* ---- pricing cards ---------------------------------------------------------*/
+.grid-cards{grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:clamp(16px,2vw,26px)}
+.pcard{border:1px solid var(--line);background:var(--cream-2);padding:clamp(26px,2.6vw,38px);display:flex;flex-direction:column;min-width:0;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.pcard:hover{border-color:var(--ink);box-shadow:0 22px 44px -30px rgba(22,32,43,.4);transform:translateY(-3px)}
+.pcard--outline{border:1px solid var(--ink);background:var(--cream)}
+.pcard--outline:hover{border-color:var(--coral-ink)}
+/* the plan itself is the headline; the price is a supporting fact, not the
+   biggest number on the card — reversed from an earlier pass where price
+   (38px) outweighed the plan title (19px) */
+.pcard .h3{font-size:clamp(21px,2.2vw,25px)}
+.pcard__price{margin:16px 0;font-family:var(--mono);font-size:16px;font-weight:700;letter-spacing:.02em;color:var(--coral-ink)}
+.pcard__price small{font-size:13px;font-weight:500;color:var(--ink-soft)}
+.pcard__note{margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--coral)}
+.pcard__list{margin:20px 0 26px;padding:22px 0 0;list-style:none;display:flex;flex-direction:column;gap:11px;border-top:1px solid var(--line-soft)}
+.pcard__list li{display:flex;gap:11px;font-size:14.5px;line-height:1.5}
+.pcard__list li::before{content:"\2014";color:var(--coral);font-weight:700}
+.pcard .link{margin-top:auto;align-self:flex-start}
+
+/* ---- project rows (home + travaux) ---------------------------------------*/
+.proj{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(22px,4vw,64px);align-items:center;padding:clamp(26px,3vw,42px) 0;border-top:1px solid var(--line)}
+.proj:last-child{border-bottom:1px solid var(--line)}
+.proj__num{font-size:clamp(42px,5vw,70px);font-weight:800;letter-spacing:-.05em;color:rgba(22,32,43,.16);line-height:1}
+.proj__tag{display:inline-block;transform:rotate(-4deg);border:1px solid var(--coral);color:var(--coral);font-family:var(--mono);font-size:10px;letter-spacing:.16em;padding:5px 9px}
+.proj__shot{width:100%;height:auto;object-fit:contain;background:var(--cream-3);border:1px solid var(--line);box-shadow:0 32px 60px -32px rgba(22,32,43,.6);transition:transform .5s cubic-bezier(.22,.9,.24,1),box-shadow .5s cubic-bezier(.22,.9,.24,1)}
+.proj__shot-wrap{min-width:0;padding:clamp(10px,1.6vw,22px)}
+.proj__shot-wrap:hover .proj__shot{transform:translateY(-6px);box-shadow:0 46px 78px -34px rgba(22,32,43,.7)}
+
+.tile{text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--cream-2);padding:clamp(20px,2.2vw,30px);display:flex;flex-direction:column;gap:18px;min-width:0;transition:border-color .3s ease,background .3s ease,transform .4s cubic-bezier(.22,.9,.24,1)}
+.tile:hover{border-color:var(--ink);background:#E3DED5;transform:translateY(-3px)}
+.tile img{width:100%;height:auto;object-fit:contain;border:1px solid var(--line);box-shadow:0 20px 40px -24px rgba(22,32,43,.6)}
+.tile__cta{margin-top:auto;font-size:14px;font-weight:600;color:var(--coral)}
+
+/* ---- dispersed labels (home, "ce qui est aujourd'hui dispersé") ----------*/
+.scatter{position:relative;margin:clamp(34px,4.6vw,62px) 0 clamp(54px,7vw,94px);max-width:1080px;display:flex;flex-wrap:wrap;align-items:flex-start;column-gap:clamp(20px,3.4vw,54px);row-gap:clamp(44px,5.4vw,76px)}
+.scatter>span{display:inline-block}
+.scatter>span>span{display:inline-block}
+.scatter>span>span>span{display:inline-block;white-space:nowrap;padding:.34em .62em;line-height:1.1}
+@keyframes bvA{from{transform:rotate(0deg) translateX(16px) rotate(0deg)}to{transform:rotate(360deg) translateX(16px) rotate(-360deg)}}
+@keyframes bvB{from{transform:rotate(0deg) translateX(22px) rotate(0deg)}to{transform:rotate(360deg) translateX(22px) rotate(-360deg)}}
+@keyframes bvC{from{transform:rotate(0deg) translateX(12px) rotate(0deg)}to{transform:rotate(360deg) translateX(12px) rotate(-360deg)}}
+@media (prefers-reduced-motion: reduce){
+  .scatter [style*="animation"]{animation:none!important}
+}
+
+.band{position:relative;background:#33627A;color:var(--cream);clip-path:polygon(0 11%,100% 0,100% 100%,0 100%);padding:clamp(84px,10vw,144px) 0 clamp(66px,8vw,114px)}
+.band__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(26px,4vw,70px);align-items:start}
+.band__big{margin:0;font-size:clamp(27px,3.3vw,46px);font-weight:700;line-height:1.08;letter-spacing:-.032em;text-wrap:balance}
+.band p{font-family:var(--serif);font-size:clamp(16.5px,1.3vw,19px);line-height:1.66;color:rgba(237,233,226,.92)}
+
+/* ---- facts (specs tables) --------------------------------------------------*/
+.facts{display:flex;flex-direction:column;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+.facts--dark{background:rgba(237,233,226,.18);border-color:rgba(237,233,226,.18)}
+.fact{background:var(--cream);padding:16px clamp(16px,2vw,24px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.facts--dark .fact{background:var(--ink)}
+.fact__k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-soft);text-transform:uppercase}
+.facts--dark .fact__k{color:rgba(237,233,226,.6)}
+.fact__v{font-size:14.5px;font-weight:600;color:var(--ink)}
+.facts--dark .fact__v{color:var(--cream)}
+.fact__v a{color:var(--coral-2);text-decoration:none}
+.fact__v a:hover{color:var(--cream)}
+
+.facts--grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+.facts--grid2 .fact{flex-direction:column;gap:6px}
+
+/* ---- process timeline (Studio "how a project unfolds") -------------------
+   Connected numbered nodes: a horizontal line on desktop, a vertical one on
+   mobile — a real sequence rather than four identical boxes in a row. */
+.timeline{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,32px)}
+.timeline::before{content:"";position:absolute;top:19px;left:0;right:0;height:1px;background:var(--line);z-index:0}
+.section--dark .timeline::before{background:rgba(237,233,226,.22)}
+.timeline__item{position:relative;z-index:1;min-width:0}
+.timeline__node{width:40px;height:40px;flex:none;border:2px solid var(--coral);background:var(--cream);color:var(--coral-ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700}
+.section--dark .timeline__node{background:var(--ink);color:var(--coral-2)}
+.timeline__title{display:block;margin:16px 0 8px;font-size:17.5px;font-weight:700;color:var(--ink)}
+.section--dark .timeline__title{color:var(--cream)}
+.timeline__text{color:var(--ink-soft);margin:0}
+.section--dark .timeline__text{color:rgba(237,233,226,.78)}
+@media (max-width:760px){
+  .timeline{grid-template-columns:1fr;gap:0}
+  .timeline::before{top:0;bottom:0;left:19px;right:auto;width:1px;height:auto}
+  .timeline__item{display:grid;grid-template-columns:40px 1fr;column-gap:20px;padding-bottom:clamp(26px,5vw,36px)}
+  .timeline__item:last-child{padding-bottom:0}
+  .timeline__title,.timeline__text{grid-column:2}
+  .timeline__title{margin-top:8px}
+}
+
+/* ---- steps ------------------------------------------------------------------*/
+.steps{grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:clamp(18px,2.2vw,32px)}
+.step{border-top:2px solid var(--ink);padding-top:18px;min-width:0}
+.step__n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--coral)}
+.step__t{display:block;margin:12px 0 8px;font-size:17.5px;font-weight:700}
+
+/* ---- FAQ ----------------------------------------------------------------------*/
+.faq{display:flex;flex-direction:column;min-width:0}
+.faq details{border-top:1px solid var(--line);padding:18px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{font-size:16.5px;font-weight:600;display:flex;justify-content:space-between;gap:20px}
+.faq summary::after{content:"+";color:var(--coral);font-weight:400}
+.faq details[open] summary::after{content:"\2212"}
+.faq details p{margin:12px 0 0;font-family:var(--serif);font-size:16px;line-height:1.62;color:var(--ink-soft);max-width:60ch}
+
+/* ---- contact / forms -----------------------------------------------------------*/
+.field{display:grid;gap:7px;min-width:0}
+.field span{font-family:var(--mono);font-size:11px;letter-spacing:.13em;color:var(--ink-soft);text-transform:uppercase}
+.field input,.field select,.field textarea{min-width:0;width:100%;font:inherit;font-size:15px;padding:12px 13px;border:1px solid rgba(22,32,43,.3);background:var(--cream);color:var(--ink);border-radius:0}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--ink);outline-offset:1px}
+.field__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.form-card{display:grid;gap:16px;border:1px solid var(--line);background:var(--cream-2);padding:clamp(20px,3vw,38px);min-width:0}
+
+/* ---- footer --------------------------------------------------------------------*/
+.foot{background:var(--ink);color:rgba(237,233,226,.7);border-top:1px solid rgba(237,233,226,.12)}
+.foot__grid{padding-top:clamp(36px,4.5vw,58px);padding-bottom:clamp(36px,4.5vw,58px);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;align-items:start}
+.foot__brand{font-weight:800;font-size:15px;letter-spacing:.15em;color:var(--cream)}
+.foot__desc{margin:12px 0 0;font-family:var(--serif);font-size:15px;line-height:1.6;max-width:280px;color:rgba(237,233,226,.7)}
+.foot__col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.foot__col a{font-size:14px;color:rgba(237,233,226,.7);text-decoration:none}
+.foot__col a:hover{color:var(--cream)}
+.foot__mono{font-family:var(--mono);font-size:12.5px}
+.foot__langs{margin:0 0 12px;font-family:var(--mono);font-size:11px;line-height:1.9;letter-spacing:.06em;color:rgba(237,233,226,.5)}
+
+/* ---- utility -----------------------------------------------------------------*/
+.mt-0{margin-top:0}
+.center{text-align:center}
+.stat-wide{max-width:900px}
+
+@media (max-width:760px){
+  .nav__in{position:relative;padding-top:12px;padding-bottom:8px}
+  /* single row, natural DOM order (brand, toggle, lang) — no grouping or
+     reordering imposed; the row's own space-between spacing handles it. */
+  .nav__toggle-wrap{display:block}
+  .nav__toggle{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;width:30px;height:30px;cursor:pointer}
+  .nav__toggle span{display:block;width:18px;height:2px;background:var(--ink);transition:transform .25s ease,opacity .25s ease}
+  .nav__toggle-wrap[open] .nav__toggle span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  .nav__toggle-wrap[open] .nav__toggle span:nth-child(2){opacity:0}
+  .nav__toggle-wrap[open] .nav__toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+  /* hidden by default on mobile; opened purely via the sibling [open]
+     state above. Flat, no shadow/card — just a plain panel below the row,
+     same cream as the page, separated with a hairline like the rest of the
+     site (FAQ rows, footer) rather than looking like a floating card. */
+  .nav__links{display:none;position:absolute;top:100%;left:0;right:0;z-index:10;flex-direction:column;align-items:stretch;padding:6px 0 10px;background:var(--cream);border-bottom:1px solid var(--line)}
+  .nav__toggle-wrap[open] ~ .nav__links{display:flex}
+  .nav__link{font-size:15px;padding:10px 4px;border-top:1px solid var(--line-soft)}
+  /* minimum text sizes on small screens */
+  .small,.eyebrow,.nav__link,.field span,.fact__k{font-size:13px}
+  .link,.btn,.nav__lang a,.faq summary{font-size:14px}
+  body{font-size:16px}
+}
+@media (max-width:520px){
+  .nav__lang{font-size:12px}
+  .btn-row{gap:16px}
+}
+
+/* ---- overflow safety -------------------------------------------------------
+   Nothing on the page should be able to force horizontal scroll on narrow
+   viewports; every wrapper here is allowed to shrink below its content's
+   natural size. */
+.wrap,.grid,.split,.form-grid,.case-study-grid,.proj,.grid-benefits,.grid-cards,.band__grid,.foot__grid,.direction-lab__grid,.lab__stage{min-width:0}
+.hero__copy,.hero__lead,.measure{max-width:100%}
+
+/* ---- print ------------------------------------------------------------------
+   Everything must print, including anything a script would otherwise reveal
+   on scroll or interaction. */
+@media print{
+  .nav{position:static;backdrop-filter:none}
+  .hero__band{display:none}
+  a{color:#000!important}
+  * {box-shadow:none!important}
+}
