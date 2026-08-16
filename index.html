@@ -34,7 +34,7 @@
 <link rel="manifest" href="site.webmanifest">
 <meta name="msapplication-TileColor" content="#16202B">
 
-<link rel="stylesheet" href="assets/bonaventis.css?v=19">
+<link rel="stylesheet" href="assets/bonaventis.css?v=22">
 <!-- MOKA experiment (scroll-driven Atelier Moka case study) — delete this
      <link>, the <section id="direction-lab">…</section> below, and the
      matching <script> near </body> to remove it with zero effect on the
@@ -94,8 +94,14 @@
       <a class="nav__link" href="work.html">Travaux</a>
       <a class="nav__link" href="studio.html">Studio</a>
       <a class="nav__link" href="contact.html">Contact</a>
+      <details class="nav__lang-wrap">
+        <summary class="nav__lang-toggle" aria-label="Langue"><svg class="nav__lang-toggle-icon" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.2"/><ellipse cx="8" cy="8" rx="2.6" ry="6.25" stroke="currentColor" stroke-width="1.2"/><line x1="1.75" y1="8" x2="14.25" y2="8" stroke="currentColor" stroke-width="1.2"/></svg><span>FR</span></summary>
+      </details>
+      <div class="nav__lang-drop">
+      <a href="index.html" aria-current="true">FR</a><span aria-hidden="true">·</span><a href="en/index.html">EN</a><span aria-hidden="true">·</span><a href="it/index.html">IT</a>
+      </div>
     </nav>
-    <div class="nav__lang" aria-label="Langue">
+    <div class="nav__lang">
       <a href="index.html" aria-current="true">FR</a><span aria-hidden="true">·</span><a href="en/index.html">EN</a><span aria-hidden="true">·</span><a href="it/index.html">IT</a>
     </div>
   </div>
@@ -511,6 +517,6 @@
 <script src="assets/bonaventis.js?v=5" defer></script>
 <!-- MOKA experiment — remove this line together with the CSS <link> and
      the #direction-lab section to deactivate it. -->
-<script src="assets/moka-lab.js?v=6" defer></script>
+<script src="assets/moka-lab.js?v=7" defer></script>
 </body>
 </html>
