@@ -60,7 +60,7 @@
          still converging, and tick() only keeps scheduling frames while
          at least one story hasn't settled yet. */
       var settled=story._mokaP==null;
-      var p=settled?target:story._mokaP+(target-story._mokaP)*.16;
+      var p=settled?target:story._mokaP+(target-story._mokaP)*.07;
       if(Math.abs(target-p)<.0004)p=target;
       story._mokaP=p;
       var assemble=ease(range(p,.02,.20));
