@@ -55,6 +55,7 @@
     <nav class="nav__links" aria-label="Principale">
       <a class="nav__link" href="work.html">Lavori</a>
       <a class="nav__link" href="studio.html" aria-current="page">Studio</a>
+      <a class="nav__link" href="tariffe.html">Tariffe</a>
       <a class="nav__link" href="contact.html">Contatti</a>
       <details class="nav__lang-wrap">
         <summary class="nav__lang-toggle" aria-label="Lingua"><svg class="nav__lang-toggle-icon" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.2"/><ellipse cx="8" cy="8" rx="2.6" ry="6.25" stroke="currentColor" stroke-width="1.2"/><line x1="1.75" y1="8" x2="14.25" y2="8" stroke="currentColor" stroke-width="1.2"/></svg><span>IT</span></summary>
@@ -80,14 +81,19 @@
     </div>
   </section>
 
-  <!-- Raccomandazione prima della messa online definitiva: sostituire questo
-       blocco tipografico con un ritratto editoriale reale di Leonardo
-       Rubatto. Niente foto stock, niente ritratto generato — vedi il
-       rapporto finale. -->
-  <section class="section--dark" style="padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(74px,9vw,124px);">
-    <div class="wrap split split--equal">
+  <!-- Ritratto editoriale reale di Leonardo da aggiungere qui appena
+       disponibile — per ora, scelta consapevole di restare in tipografia
+       invece di usare una foto stock o generata. Il frammento triangolare
+       qui sotto riusa assets/art/rathi-thevi-5.jpg, finora inutilizzata sul
+       sito (vedi mentions-legales.html). -->
+  <section class="section--dark" style="position:relative;overflow:hidden;padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(74px,9vw,124px);">
+    <div aria-hidden="true" style="position:absolute;top:0;right:0;width:min(300px,36%);height:68%;overflow:hidden;clip-path:polygon(100% 0,100% 100%,0 0);z-index:1;">
+      <img src="../assets/art/rathi-thevi-5.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;opacity:.5;mix-blend-mode:screen;filter:grayscale(.1) contrast(1.05);">
+    </div>
+    <div class="wrap split split--wide-left" style="--split-left:1.15fr;position:relative;z-index:2;">
       <div>
         <p class="body-serif" style="font-size:clamp(16.5px,1.3vw,19.5px);color:rgba(237,233,226,.9);">Lavori direttamente con la persona che definisce, progetta e realizza il tuo sito: <strong style="color:var(--cream);font-weight:600;">Leonardo Rubatto</strong>, in Francia.</p>
+        <p class="body-serif" style="margin-top:18px;font-size:clamp(16.5px,1.3vw,19.5px);">Studente di Licence Sciences des Organisations all'Université Paris-Dauphine (PSL), ho imparato a usare l'intelligenza artificiale come uno strumento tra tanti — e in un'economia sempre più digitale, sapersene servire bene mi è sembrata la cosa più naturale. Bonaventis nasce da questo interesse: il tempo e la disponibilità di uno studente, messi al servizio di progetti reali, dal primo messaggio alla messa online.</p>
         <p class="body-serif" style="margin-top:18px;font-size:clamp(16.5px,1.3vw,19.5px);">I siti sono scritti a mano, poi messi online e archiviati a ogni modifica. È una scelta — velocità, robustezza, indipendenza da un fornitore — non un limite da nascondere. Il dettaglio tecnico è proprio accanto, per chi vuole leggerlo.</p>
       </div>
       <dl class="facts facts--dark facts--grid2" data-reveal>
@@ -98,8 +104,23 @@
         <div class="fact"><dt class="fact__k">Versioni</dt><dd class="fact__v" style="margin:0;">Git</dd></div>
         <div class="fact"><dt class="fact__k">Lingue parlate</dt><dd class="fact__v" style="margin:0;">Français · English · Italiano</dd></div>
         <div class="fact"><dt class="fact__k">Basato a</dt><dd class="fact__v" style="margin:0;">Francia — lavoro a distanza</dd></div>
+        <div class="fact"><dt class="fact__k">Formazione</dt><dd class="fact__v" style="margin:0;">Licence Sciences des Organisations · Paris-Dauphine (PSL)</dd></div>
         <div class="fact"><dt class="fact__k">In questo momento</dt><dd class="fact__v" style="margin:0;">Aperto a nuovi progetti</dd></div>
       </dl>
+    </div>
+  </section>
+
+  <!-- Secondo profilo: presentato onestamente come una possibilità futura,
+       non come un membro reale del team — da qui il lorem ipsum e
+       l'impaginazione volutamente scostata, non un contraltare simmetrico
+       a Leonardo qui sopra. -->
+  <section class="section--tight">
+    <div class="wrap">
+      <div style="max-width:480px;margin-left:auto;position:relative;border:1px solid var(--line-soft);padding:24px 26px;">
+        <span aria-hidden="true" style="position:absolute;top:-11px;left:-11px;width:32px;height:32px;background:var(--coral);clip-path:polygon(0 0,100% 0,0 100%);"></span>
+        <p class="small" style="font-family:var(--mono);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-ink);margin:0 0 10px;">Profilo da confermare</p>
+        <p class="body-serif" style="font-size:15px;line-height:1.75;color:var(--ink-soft);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Un secondo profilo potrebbe unirsi allo studio se un progetto lo richiede — design, sviluppo, o entrambi a seconda del bisogno. Nulla è ancora deciso; questo riquadro sarà aggiornato in caso di novità.</p>
+      </div>
     </div>
   </section>
 
@@ -151,11 +172,12 @@
     <div class="foot__col">
       <a href="work.html">Lavori</a>
       <a href="studio.html">Studio</a>
+      <a href="tariffe.html">Tariffe</a>
       <a href="contact.html">Contatti</a>
       <a href="menu-digitale.html">Menu digitale</a>
     </div>
     <div class="foot__col">
-      <a class="foot__mono" href="https://bde-sitetest.pages.dev" target="_blank" rel="noopener">bde-sitetest.pages.dev &#8599;</a>
+      <a class="foot__mono" href="https://bdedauphine.com" target="_blank" rel="noopener">bdedauphine.com &#8599;</a>
       <a class="foot__mono" href="https://qualamantis.com" target="_blank" rel="noopener">qualamantis.com &#8599;</a>
       <a class="foot__mono" href="https://wecalc.fr" target="_blank" rel="noopener">wecalc.fr &#8599;</a>
     </div>

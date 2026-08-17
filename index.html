@@ -74,7 +74,7 @@
   "mainEntity": [
     { "@type": "Question", "name": "Pourquoi un site statique ?", "acceptedAnswer": { "@type": "Answer", "text": "Parce que c'est plus rapide à servir, plus robuste dans le temps et sans dépendance à un fournisseur. Il n'y a ni base de données ni extension à mettre à jour : le site fonctionne encore tel quel dans plusieurs années." } },
     { "@type": "Question", "name": "Qui travaille sur mon site ?", "acceptedAnswer": { "@type": "Answer", "text": "Vous travaillez directement avec la personne qui définit, conçoit et construit votre site, du premier message à la mise en ligne." } },
-    { "@type": "Question", "name": "J'ai déjà un site — on repart de zéro ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. L'offre « Repenser l'existant » part de 1 200 € et s'ajuste selon l'existant : le contenu qui fonctionne est conservé, le reste est réécrit." } },
+    { "@type": "Question", "name": "J'ai déjà un site — on repart de zéro ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. L'offre « Repenser l'existant » s'ajuste selon l'existant : le contenu qui fonctionne est conservé, le reste est réécrit — le tarif suit l'ampleur réelle du travail, voir la page tarifs." } },
     { "@type": "Question", "name": "En quelle langue peut-on travailler ?", "acceptedAnswer": { "@type": "Answer", "text": "En français, en anglais ou en italien — pour les échanges comme pour le contenu du site." } },
     { "@type": "Question", "name": "Comment est-ce qu'on démarre ?", "acceptedAnswer": { "@type": "Answer", "text": "Par le formulaire de contact : votre activité, ce que le site doit faire, et un budget approximatif. Réponse écrite sous un jour ouvré." } }
   ]
@@ -93,6 +93,7 @@
     <nav class="nav__links" aria-label="Principale">
       <a class="nav__link" href="work.html">Travaux</a>
       <a class="nav__link" href="studio.html">Studio</a>
+      <a class="nav__link" href="tarifs.html">Tarifs</a>
       <a class="nav__link" href="contact.html">Contact</a>
       <details class="nav__lang-wrap">
         <summary class="nav__lang-toggle" aria-label="Langue"><svg class="nav__lang-toggle-icon" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.2"/><ellipse cx="8" cy="8" rx="2.6" ry="6.25" stroke="currentColor" stroke-width="1.2"/><line x1="1.75" y1="8" x2="14.25" y2="8" stroke="currentColor" stroke-width="1.2"/></svg><span>FR</span></summary>
@@ -266,40 +267,10 @@
         <h2 class="h2">Quelques projets, expliqués clairement.</h2>
       </div>
 
-      <article class="proj" data-reveal>
+      <article class="proj proj--lead" data-reveal>
         <div style="min-width:0;">
           <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
             <span class="proj__num">01</span>
-            <span class="proj__tag">BDE Dauphine</span>
-          </div>
-          <h3 class="h2" style="font-size:clamp(23px,2.5vw,33px);">Plateforme événementielle</h3>
-          <p class="body-serif" style="margin-top:14px;max-width:440px;font-size:16.5px;">Le problème : une billetterie et un programme d'événements que personne ne retrouvait sur l'ancien site.</p>
-          <p class="body-serif" style="margin-top:8px;max-width:440px;font-size:16.5px;">La réponse : un accès direct à la billetterie dès l'écran d'accueil, pensé d'abord pour le téléphone.</p>
-          <div class="btn-row" style="margin-top:20px;">
-            <a class="link" href="project-bde.html">Voir l'étude de cas &rarr;</a>
-            <a class="link link--plain" href="https://bde-sitetest.pages.dev" target="_blank" rel="noopener">bde-sitetest.pages.dev &#8599;</a>
-          </div>
-        </div>
-        <div class="proj__shot-wrap">
-          <picture>
-            <source type="image/avif" srcset="assets/shots/bde-960.avif 960w, assets/shots/bde-1600.avif 1600w" sizes="(min-width:760px) 46vw, 92vw">
-            <source type="image/webp" srcset="assets/shots/bde-960.webp 960w, assets/shots/bde-1600.webp 1600w" sizes="(min-width:760px) 46vw, 92vw">
-            <img class="proj__shot" src="assets/shots/bde.png" width="1600" height="820" alt="Page d'accueil du site BDE Dauphine" loading="lazy" decoding="async">
-          </picture>
-        </div>
-      </article>
-
-      <article class="proj" data-reveal>
-        <div class="proj__shot-wrap" style="order:2;">
-          <picture>
-            <source type="image/avif" srcset="assets/shots/qualamantis-960.avif 960w, assets/shots/qualamantis-1600.avif 1600w" sizes="(min-width:760px) 46vw, 92vw">
-            <source type="image/webp" srcset="assets/shots/qualamantis-960.webp 960w, assets/shots/qualamantis-1600.webp 1600w" sizes="(min-width:760px) 46vw, 92vw">
-            <img class="proj__shot" src="assets/shots/qualamantis.png" width="1600" height="826" alt="Page d'accueil du site Qualamantis" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <div style="min-width:0;order:1;">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
-            <span class="proj__num">02</span>
             <span class="proj__tag">Qualamantis · 3 langues</span>
           </div>
           <h3 class="h2" style="font-size:clamp(23px,2.5vw,33px);">Entreprise de conseil en qualité industrielle</h3>
@@ -310,9 +281,39 @@
             <a class="link link--plain" href="https://qualamantis.com" target="_blank" rel="noopener">qualamantis.com &#8599;</a>
           </div>
         </div>
+        <div class="proj__shot-wrap">
+          <picture>
+            <source type="image/avif" srcset="assets/shots/qualamantis-960.avif 960w, assets/shots/qualamantis-1600.avif 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <source type="image/webp" srcset="assets/shots/qualamantis-960.webp 960w, assets/shots/qualamantis-1600.webp 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <img class="proj__shot" src="assets/shots/qualamantis.png" width="1600" height="826" alt="Page d'accueil du site Qualamantis" loading="lazy" decoding="async">
+          </picture>
+        </div>
       </article>
 
-      <article class="proj" data-reveal>
+      <article class="proj proj--dark" data-reveal>
+        <div class="proj__shot-wrap">
+          <picture>
+            <source type="image/avif" srcset="assets/shots/bde-960.avif 960w, assets/shots/bde-1600.avif 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <source type="image/webp" srcset="assets/shots/bde-960.webp 960w, assets/shots/bde-1600.webp 1600w" sizes="(min-width:760px) 46vw, 92vw">
+            <img class="proj__shot" src="assets/shots/bde.png" width="1600" height="820" alt="Page d'accueil du site BDE Dauphine" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div style="min-width:0;">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+            <span class="proj__num">02</span>
+            <span class="proj__tag">BDE Dauphine</span>
+          </div>
+          <h3 class="h2" style="font-size:clamp(23px,2.5vw,33px);">Plateforme événementielle</h3>
+          <p class="body-serif" style="margin-top:14px;max-width:440px;font-size:16.5px;">Le problème : une billetterie et un programme d'événements que personne ne retrouvait sur l'ancien site.</p>
+          <p class="body-serif" style="margin-top:8px;max-width:440px;font-size:16.5px;">La réponse : un accès direct à la billetterie dès l'écran d'accueil, pensé d'abord pour le téléphone.</p>
+          <div class="btn-row" style="margin-top:20px;">
+            <a class="link" href="project-bde.html">Voir l'étude de cas &rarr;</a>
+            <a class="link link--plain" href="https://bdedauphine.com" target="_blank" rel="noopener">bdedauphine.com &#8599;</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj proj--wide" data-reveal>
         <div style="min-width:0;">
           <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
             <span class="proj__num">03</span>
@@ -350,8 +351,7 @@
         <div class="pcard">
           <h3 class="h3">Créer une présence claire</h3>
           <p class="body-serif" style="margin-top:8px;">Un nouveau site pour expliquer votre activité, structurer votre offre et orienter le visiteur vers la bonne action.</p>
-          <div class="pcard__price">À partir de 900 €</div>
-          <ul class="pcard__list">
+          <ul class="pcard__list" style="margin-top:20px;">
             <li>Arborescence et contenu structurés avec vous</li>
             <li>Design sur mesure, jamais un template</li>
             <li>Pensé mobile d'abord — aussi lisible sur téléphone que sur ordinateur</li>
@@ -363,9 +363,7 @@
         <div class="pcard pcard--outline">
           <h3 class="h3">Repenser l'existant</h3>
           <p class="body-serif" style="margin-top:8px;">Conserver ce qui fonctionne, supprimer ce qui brouille le message et reconstruire une expérience plus claire.</p>
-          <div class="pcard__price" style="margin-bottom:6px;">À partir de 1 200 €</div>
-          <p class="pcard__note">selon le nombre de pages, le contenu et les langues — le prix suit l'ampleur réelle du travail</p>
-          <ul class="pcard__list">
+          <ul class="pcard__list" style="margin-top:20px;">
             <li>Lecture de l'existant : contenu, structure, code</li>
             <li>Réécriture en statique, sans CMS</li>
             <li>Reprise du contenu et des adresses de pages</li>
@@ -376,9 +374,8 @@
         <div class="pcard">
           <h3 class="h3">Faire vivre le site</h3>
           <p class="body-serif" style="margin-top:8px;">Mettre à jour les contenus, surveiller la mise en ligne et faire évoluer le site sans engagement de durée.</p>
-          <div class="pcard__price">45 € <span style="font-size:13px;font-weight:500;color:var(--ink-soft);">/ mois</span></div>
-          <ul class="pcard__list">
-            <li>Modifications de contenu et de pages</li>
+          <ul class="pcard__list" style="margin-top:20px;">
+            <li>Modifications de contenu et de pages existantes</li>
             <li>Surveillance de la mise en ligne</li>
             <li>Historique complet dans Git</li>
             <li>Sans engagement de durée</li>
@@ -386,7 +383,10 @@
           <a class="link" href="contact.html">En parler &rarr;</a>
         </div>
       </div>
-      <p class="small" style="margin-top:clamp(28px,4vw,40px);padding-top:18px;border-top:1px solid var(--line-soft);max-width:58ch;line-height:1.7;">Le périmètre est toujours fixé par écrit avant de commencer — le prix suit le nombre réel de pages, de langues et de fonctionnalités. Prix hors nom de domaine.</p>
+      <div style="margin-top:clamp(28px,4vw,40px);padding-top:18px;border-top:1px solid var(--line-soft);display:flex;flex-wrap:wrap;gap:16px 28px;align-items:baseline;justify-content:space-between;">
+        <p class="small" style="max-width:52ch;line-height:1.7;margin:0;">Le périmètre est toujours fixé par écrit avant de commencer — le prix suit le nombre réel de pages, de langues et de fonctionnalités.</p>
+        <a class="link" href="tarifs.html">Voir les tarifs &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -400,7 +400,6 @@
       </div>
       <a class="btn" href="menu-numerique.html">Voir la solution &rarr;</a>
       <picture class="menu-cta__media">
-        <source type="image/avif" srcset="assets/menu-qr/menu-qr-transparent-640.avif 640w, assets/menu-qr/menu-qr-transparent-960.avif 960w, assets/menu-qr/menu-qr-transparent-1536.avif 1536w" sizes="(min-width:760px) 640px, 100vw">
         <source type="image/webp" srcset="assets/menu-qr/menu-qr-transparent-640.webp 640w, assets/menu-qr/menu-qr-transparent-960.webp 960w, assets/menu-qr/menu-qr-transparent-1536.webp 1536w" sizes="(min-width:760px) 640px, 100vw">
         <img src="assets/menu-qr/menu-qr-transparent-960.webp" width="1536" height="1024" alt="Menu en ligne consulté via un QR code" loading="lazy" decoding="async">
       </picture>
@@ -470,7 +469,7 @@
         </details>
         <details>
           <summary>J'ai déjà un site — on repart de zéro ?</summary>
-          <p>Non. L'offre « Repenser l'existant » part de 1 200 € et s'ajuste selon l'existant : le contenu qui fonctionne est conservé, le reste est réécrit.</p>
+          <p>Non. L'offre « Repenser l'existant » s'ajuste selon l'existant : le contenu qui fonctionne est conservé, le reste est réécrit — le tarif suit l'ampleur réelle du travail, voir la page tarifs.</p>
         </details>
         <details>
           <summary>En quelle langue peut-on travailler ?</summary>
@@ -509,11 +508,12 @@
     <div class="foot__col">
       <a href="work.html">Travaux</a>
       <a href="studio.html">Studio</a>
+      <a href="tarifs.html">Tarifs</a>
       <a href="contact.html">Contact</a>
       <a href="menu-numerique.html">Menu numérique</a>
     </div>
     <div class="foot__col">
-      <a class="foot__mono" href="https://bde-sitetest.pages.dev" target="_blank" rel="noopener">bde-sitetest.pages.dev &#8599;</a>
+      <a class="foot__mono" href="https://bdedauphine.com" target="_blank" rel="noopener">bdedauphine.com &#8599;</a>
       <a class="foot__mono" href="https://qualamantis.com" target="_blank" rel="noopener">qualamantis.com &#8599;</a>
       <a class="foot__mono" href="https://wecalc.fr" target="_blank" rel="noopener">wecalc.fr &#8599;</a>
     </div>
