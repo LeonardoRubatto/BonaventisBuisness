@@ -51,6 +51,16 @@
       var rect=track.getBoundingClientRect();
       var scrollable=Math.max(1,track.offsetHeight-window.innerHeight);
       var target=clamp(-rect.top/scrollable,0,1);
+      /* Mobile only, by design: this whole smoothing mechanism exists to
+         fix touch-flick jerkiness (native momentum scroll delivering
+         position in uneven steps). Desktop scrolling (wheel/trackpad,
+         no OS momentum layer fighting the main thread the same way)
+         never had that complaint, so it keeps the original direct,
+         1:1 scroll-to-progress behaviour — checked fresh every render
+         rather than cached, so resizing across the breakpoint (or
+         rotating a tablet) picks it up immediately. 759px matches the
+         site's one general mobile breakpoint everywhere else. */
+      var isMobile=window.innerWidth<=759;
       /* Chase the scroll-derived target instead of snapping to it every
          frame — raw scroll position (especially touch momentum on mobile)
          made the choreography feel jerky. The catch-up is expressed as a
@@ -70,7 +80,7 @@
       var TAU=120;
       var settled=story._mokaP==null;
       var p;
-      if(settled){
+      if(settled||!isMobile){
         p=target;
       }else{
         var dtEff=dt||16;
