@@ -55,6 +55,7 @@
     <nav class="nav__links" aria-label="Main">
       <a class="nav__link" href="work.html">Work</a>
       <a class="nav__link" href="studio.html" aria-current="page">Studio</a>
+      <a class="nav__link" href="pricing.html">Pricing</a>
       <a class="nav__link" href="contact.html">Contact</a>
       <details class="nav__lang-wrap">
         <summary class="nav__lang-toggle" aria-label="Language"><svg class="nav__lang-toggle-icon" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.2"/><ellipse cx="8" cy="8" rx="2.6" ry="6.25" stroke="currentColor" stroke-width="1.2"/><line x1="1.75" y1="8" x2="14.25" y2="8" stroke="currentColor" stroke-width="1.2"/></svg><span>EN</span></summary>
@@ -80,13 +81,19 @@
     </div>
   </section>
 
-  <!-- Recommendation before final launch: replace this typographic block
-       with a real editorial portrait of Leonardo Rubatto. No stock photo,
-       no generated portrait — see the final report. -->
-  <section class="section--dark" style="padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(74px,9vw,124px);">
-    <div class="wrap split split--equal">
+  <!-- Real editorial portrait of Leonardo to add here once available — for
+       now, a deliberate choice to stay typographic rather than use a stock
+       or generated photo. The triangular fragment below reuses
+       assets/art/rathi-thevi-5.jpg, previously unused on the site (see
+       mentions-legales.html). -->
+  <section class="section--dark" style="position:relative;overflow:hidden;padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(74px,9vw,124px);">
+    <div aria-hidden="true" style="position:absolute;top:0;right:0;width:min(300px,36%);height:68%;overflow:hidden;clip-path:polygon(100% 0,100% 100%,0 0);z-index:1;">
+      <img src="../assets/art/rathi-thevi-5.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;opacity:.5;mix-blend-mode:screen;filter:grayscale(.1) contrast(1.05);">
+    </div>
+    <div class="wrap split split--wide-left" style="--split-left:1.15fr;position:relative;z-index:2;">
       <div>
         <p class="body-serif" style="font-size:clamp(16.5px,1.3vw,19.5px);color:rgba(237,233,226,.9);">You work directly with the person who defines, designs and builds your website: <strong style="color:var(--cream);font-weight:600;">Leonardo Rubatto</strong>, based in France.</p>
+        <p class="body-serif" style="margin-top:18px;font-size:clamp(16.5px,1.3vw,19.5px);">A student in a Licence in Organisation Sciences at Université Paris-Dauphine (PSL), I picked up AI as one tool among others — and in an economy that gets more digital every year, knowing how to use it well felt like the obvious thing to do. Bonaventis grew out of that interest: a student's time and availability, put to work on real projects, from the first message to launch.</p>
         <p class="body-serif" style="margin-top:18px;font-size:clamp(16.5px,1.3vw,19.5px);">Sites are written by hand, then deployed and archived with every change. That's a choice — speed, robustness, independence from a vendor — not a limitation to hide. The technical detail sits right alongside, for anyone who wants to read it.</p>
       </div>
       <dl class="facts facts--dark facts--grid2" data-reveal>
@@ -97,8 +104,22 @@
         <div class="fact"><dt class="fact__k">Versioning</dt><dd class="fact__v" style="margin:0;">Git</dd></div>
         <div class="fact"><dt class="fact__k">Languages spoken</dt><dd class="fact__v" style="margin:0;">Français · English · Italiano</dd></div>
         <div class="fact"><dt class="fact__k">Based in</dt><dd class="fact__v" style="margin:0;">France — remote work</dd></div>
+        <div class="fact"><dt class="fact__k">Education</dt><dd class="fact__v" style="margin:0;">Licence in Organisation Sciences · Paris-Dauphine (PSL)</dd></div>
         <div class="fact"><dt class="fact__k">Right now</dt><dd class="fact__v" style="margin:0;">Open to new projects</dd></div>
       </dl>
+    </div>
+  </section>
+
+  <!-- Second profile: presented honestly as a future possibility, not as a
+       real team member — hence the lorem ipsum and the layout deliberately
+       set apart, not a symmetrical counterpart to Leonardo above. -->
+  <section class="section--tight">
+    <div class="wrap">
+      <div style="max-width:480px;margin-left:auto;position:relative;border:1px solid var(--line-soft);padding:24px 26px;">
+        <span aria-hidden="true" style="position:absolute;top:-11px;left:-11px;width:32px;height:32px;background:var(--coral);clip-path:polygon(0 0,100% 0,0 100%);"></span>
+        <p class="small" style="font-family:var(--mono);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-ink);margin:0 0 10px;">Profile to be confirmed</p>
+        <p class="body-serif" style="font-size:15px;line-height:1.75;color:var(--ink-soft);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. A second profile could join the studio if a project calls for it — design, development, or both, depending on what's needed. Nothing is settled yet; this note will be updated if that changes.</p>
+      </div>
     </div>
   </section>
 
@@ -150,11 +171,12 @@
     <div class="foot__col">
       <a href="work.html">Work</a>
       <a href="studio.html">Studio</a>
+      <a href="pricing.html">Pricing</a>
       <a href="contact.html">Contact</a>
       <a href="digital-menu.html">Digital menu</a>
     </div>
     <div class="foot__col">
-      <a class="foot__mono" href="https://bde-sitetest.pages.dev" target="_blank" rel="noopener">bde-sitetest.pages.dev &#8599;</a>
+      <a class="foot__mono" href="https://bdedauphine.com" target="_blank" rel="noopener">bdedauphine.com &#8599;</a>
       <a class="foot__mono" href="https://qualamantis.com" target="_blank" rel="noopener">qualamantis.com &#8599;</a>
       <a class="foot__mono" href="https://wecalc.fr" target="_blank" rel="noopener">wecalc.fr &#8599;</a>
     </div>
