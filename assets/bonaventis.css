@@ -188,10 +188,13 @@ html.js [data-reveal].in{opacity:1;transform:none}
 .menu-cta{display:flex;flex-wrap:wrap;gap:20px 24px;align-items:center;justify-content:space-between}
 .menu-cta__copy{flex:1 1 380px;min-width:0}
 .menu-cta .btn{flex:0 0 auto}
+.menu-cta__media{display:block;width:min(720px,100%);margin:clamp(28px,4vw,40px) auto 0;border:1px solid var(--line);box-shadow:0 28px 54px -30px rgba(22,32,43,.55)}
+.menu-cta__media img{width:100%;height:auto;display:block}
 @media (max-width:759px){
   .menu-cta{flex-direction:column;align-items:stretch}
   .menu-cta__copy{flex:0 1 auto}
   .menu-cta .btn{width:100%;text-align:center}
+  .menu-cta__media{margin-top:24px}
 }
 
 .head-row{display:flex;align-items:baseline;gap:16px;margin-bottom:clamp(32px,4vw,52px)}
