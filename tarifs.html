@@ -143,15 +143,27 @@
 
   <section class="section section--tight">
     <div class="wrap">
-      <div style="border:1px solid var(--line-soft);padding:22px 24px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;">
-        <div>
-          <h2 class="h3" style="font-size:19px;">Menu numérique pour restaurants, cafés, bars</h2>
-          <p class="body-serif" style="margin-top:6px;max-width:52ch;">Une carte consultée via un QR code sur table, à partir de 450 € en une fois — moins cher qu'un abonnement mensuel classique.</p>
-        </div>
-        <a class="link" href="menu-numerique.html">Voir cette offre &rarr;</a>
-      </div>
+      <p class="small" style="padding-top:18px;border-top:1px solid var(--line-soft);max-width:64ch;line-height:1.75;">Ces montants sont des points de départ, pas des forfaits fermés : ils correspondent à un projet simple, dans une langue. Le prix final dépend du nombre réel de pages, de langues et de fonctionnalités, et il est toujours confirmé par écrit avant de commencer — aucune surprise en cours de route. Prix hors nom de domaine.</p>
+    </div>
+  </section>
 
-      <p class="small" style="margin-top:clamp(32px,4vw,48px);padding-top:18px;border-top:1px solid var(--line-soft);max-width:64ch;line-height:1.75;">Ces montants sont des points de départ, pas des forfaits fermés : ils correspondent à un projet simple, dans une langue. Le prix final dépend du nombre réel de pages, de langues et de fonctionnalités, et il est toujours confirmé par écrit avant de commencer — aucune surprise en cours de route. Prix hors nom de domaine.</p>
+  <!-- QR code / menu numérique : offre distincte des trois formules
+       ci-dessus (verticale restauration, pas un quatrième tarif générique)
+       — réutilise le composant .menu-cta déjà présent en homepage plutôt
+       que d'inventer un nouveau style. -->
+  <section class="section--tight section--sunk">
+    <div class="wrap menu-cta" data-reveal>
+      <div class="menu-cta__copy">
+        <span class="eyebrow">Aussi pour la restauration</span>
+        <h2 class="h3" style="margin:10px 0 0;">Menu numérique &amp; QR code</h2>
+        <p class="body-serif" style="margin-top:8px;max-width:52ch;">Une carte de restaurant, café ou bar consultée via un QR code sur table — à partir de 450 € en une fois, toujours à jour, sans application à installer.</p>
+        <p class="small" style="margin-top:12px;color:var(--ink-soft);">Suivi mensuel en option, 5–10 € — voir le détail sur la page dédiée.</p>
+      </div>
+      <a class="btn" href="menu-numerique.html">Voir la solution en détail &rarr;</a>
+      <picture class="menu-cta__media">
+        <source type="image/webp" srcset="assets/menu-qr/menu-qr-transparent-640.webp 640w, assets/menu-qr/menu-qr-transparent-960.webp 960w, assets/menu-qr/menu-qr-transparent-1536.webp 1536w" sizes="(min-width:760px) 640px, 100vw">
+        <img src="assets/menu-qr/menu-qr-transparent-960.webp" width="1536" height="1024" alt="Menu en ligne consulté via un QR code" loading="lazy" decoding="async">
+      </picture>
     </div>
   </section>
 

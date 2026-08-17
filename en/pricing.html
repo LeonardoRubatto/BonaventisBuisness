@@ -143,15 +143,26 @@
 
   <section class="section section--tight">
     <div class="wrap">
-      <div style="border:1px solid var(--line-soft);padding:22px 24px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;">
-        <div>
-          <h2 class="h3" style="font-size:19px;">Digital menu for restaurants, cafés, bars</h2>
-          <p class="body-serif" style="margin-top:6px;max-width:52ch;">A menu viewed via a QR code on the table, from €450 as a one-time cost — cheaper than a typical monthly subscription.</p>
-        </div>
-        <a class="link" href="digital-menu.html">See this offer &rarr;</a>
-      </div>
+      <p class="small" style="padding-top:18px;border-top:1px solid var(--line-soft);max-width:64ch;line-height:1.75;">These figures are starting points, not fixed packages: they match a simple, single-language project. The final price depends on the actual number of pages, languages and features, and is always confirmed in writing before work starts — no surprises along the way. Prices exclude the domain name.</p>
+    </div>
+  </section>
 
-      <p class="small" style="margin-top:clamp(32px,4vw,48px);padding-top:18px;border-top:1px solid var(--line-soft);max-width:64ch;line-height:1.75;">These figures are starting points, not fixed packages: they match a simple, single-language project. The final price depends on the actual number of pages, languages and features, and is always confirmed in writing before work starts — no surprises along the way. Prices exclude the domain name.</p>
+  <!-- QR code / digital menu: a distinct offer from the three plans above
+       (a restaurant vertical, not a fourth generic tier) — reuses the
+       .menu-cta component already on the homepage instead of a new style. -->
+  <section class="section--tight section--sunk">
+    <div class="wrap menu-cta" data-reveal>
+      <div class="menu-cta__copy">
+        <span class="eyebrow">Also for restaurants</span>
+        <h2 class="h3" style="margin:10px 0 0;">Digital menu &amp; QR code</h2>
+        <p class="body-serif" style="margin-top:8px;max-width:52ch;">A restaurant, café or bar menu viewed via a QR code on the table — from €450 as a one-time cost, always current, nothing to install.</p>
+        <p class="small" style="margin-top:12px;color:var(--ink-soft);">Optional monthly upkeep, €5–10 — see the details on the dedicated page.</p>
+      </div>
+      <a class="btn" href="digital-menu.html">See the full solution &rarr;</a>
+      <picture class="menu-cta__media">
+        <source type="image/webp" srcset="../assets/menu-qr/menu-qr-transparent-640.webp 640w, ../assets/menu-qr/menu-qr-transparent-960.webp 960w, ../assets/menu-qr/menu-qr-transparent-1536.webp 1536w" sizes="(min-width:760px) 640px, 100vw">
+        <img src="../assets/menu-qr/menu-qr-transparent-960.webp" width="1536" height="1024" alt="Online menu accessed via a QR code" loading="lazy" decoding="async">
+      </picture>
     </div>
   </section>
 
