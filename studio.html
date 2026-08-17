@@ -31,7 +31,7 @@
 <link rel="mask-icon" href="assets/mask-icon.svg" color="#16202B">
 <link rel="manifest" href="site.webmanifest">
 <meta name="msapplication-TileColor" content="#16202B">
-<link rel="stylesheet" href="assets/bonaventis.css?v=26">
+<link rel="stylesheet" href="assets/bonaventis.css?v=27">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -83,14 +83,11 @@
 
   <!-- Portrait éditorial réel de Leonardo à intégrer ici dès qu'il est
        disponible — pour l'instant, choix assumé de rester en typographie
-       plutôt que d'utiliser une photo de stock ou générée. Le fragment
-       triangulaire ci-dessous réutilise assets/art/rathi-thevi-5.jpg,
-       jusqu'ici inutilisé sur le site (voir mentions-legales.html). -->
-  <section class="section--dark" style="position:relative;overflow:hidden;padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(74px,9vw,124px);">
-    <div aria-hidden="true" style="position:absolute;top:0;right:0;width:min(300px,36%);height:68%;overflow:hidden;clip-path:polygon(100% 0,100% 100%,0 0);z-index:1;">
-      <img src="assets/art/rathi-thevi-5.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;opacity:.5;mix-blend-mode:screen;filter:grayscale(.1) contrast(1.05);">
-    </div>
-    <div class="wrap split split--wide-left" style="--split-left:1.15fr;position:relative;z-index:2;">
+       plutôt que d'utiliser une photo de stock ou générée. (Un fragment
+       photo était testé ici — retiré : il faisait doublon avec le triangle
+       du bandeau d'en-tête juste au-dessus.) -->
+  <section class="section--dark" style="padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(74px,9vw,124px);">
+    <div class="wrap split split--wide-left" style="--split-left:1.15fr;">
       <div>
         <p class="body-serif" style="font-size:clamp(16.5px,1.3vw,19.5px);color:rgba(237,233,226,.9);">Vous travaillez directement avec la personne qui définit, conçoit et construit votre site : <strong style="color:var(--cream);font-weight:600;">Leonardo Rubatto</strong>, en France.</p>
         <p class="body-serif" style="margin-top:18px;font-size:clamp(16.5px,1.3vw,19.5px);">Étudiant en Licence Sciences des Organisations à l'Université Paris-Dauphine (PSL), j'ai appris à me servir de l'intelligence artificielle comme d'un outil parmi d'autres — et dans une économie qui devient chaque jour plus numérique, il m'a semblé normal de savoir bien m'en servir. Bonaventis est né de cet intérêt : le temps et la disponibilité d'un étudiant, mis au service de projets réels, du premier message à la mise en ligne.</p>

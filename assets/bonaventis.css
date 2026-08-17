@@ -294,6 +294,64 @@ html.js [data-reveal].in{opacity:1;transform:none}
 .pcard__list li::before{content:"\2014";color:var(--coral);font-weight:700}
 .pcard .link{margin-top:auto;align-self:flex-start}
 
+/* ---- tarifs page: color-blocked, staggered tiers --------------------------
+   Distinct from .pcard on purpose: this is the one page whose whole job is
+   to explain price, so the price gets to be the biggest thing on the card,
+   and each of the three tiers gets its own block color instead of a
+   uniform cream card repeated three times. Desktop-only vertical stagger
+   (a step pattern) for a less rigid grid; mobile stacks flush, no offset. */
+.tier-grid{grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:clamp(18px,2.4vw,28px);align-items:start}
+@media (min-width:760px){
+  .tier-grid > :nth-child(2){margin-top:36px}
+  .tier-grid > :nth-child(3){margin-top:14px}
+}
+.tier{position:relative;overflow:hidden;padding:clamp(28px,2.8vw,40px);display:flex;flex-direction:column;min-width:0;transition:transform .25s cubic-bezier(.22,.9,.24,1),box-shadow .25s ease}
+.tier:hover{transform:translateY(-4px)}
+.tier__corner{position:absolute;top:0;right:0;width:56px;height:56px;clip-path:polygon(100% 0,100% 100%,0 0)}
+.tier__eyebrow{margin:0;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.tier__price{margin:10px 0 0;font-family:var(--mono);font-weight:800;letter-spacing:-.02em;font-size:clamp(40px,4.6vw,58px);line-height:1}
+.tier__price span{font-size:.4em;font-weight:600;letter-spacing:0;margin-left:2px}
+.tier__note{margin:10px 0 0;font-size:13px;line-height:1.6}
+.tier .h3{margin-top:20px;font-size:clamp(19px,1.9vw,22px)}
+.tier__lead{margin-top:8px;font-size:14.5px;line-height:1.6}
+.tier__list{margin:20px 0 26px;padding:20px 0 0;list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid}
+.tier__list li{display:flex;gap:10px;font-size:14.5px;line-height:1.5}
+.tier__list li::before{font-weight:700}
+.tier .link{margin-top:auto;align-self:flex-start}
+
+.tier--cream{background:var(--cream-2);border:1px solid var(--line);color:var(--ink)}
+.tier--cream:hover{box-shadow:0 22px 44px -30px rgba(22,32,43,.4)}
+.tier--cream .tier__corner{background:var(--coral)}
+.tier--cream .tier__eyebrow{color:var(--coral-ink)}
+.tier--cream .tier__price{color:var(--ink)}
+.tier--cream .tier__note{color:var(--ink-soft)}
+.tier--cream .tier__list{border-color:var(--line-soft)}
+.tier--cream .tier__list li::before{content:"\2014";color:var(--coral)}
+
+.tier--ink{background:var(--ink);color:var(--cream)}
+.tier--ink:hover{box-shadow:0 26px 50px -30px rgba(0,0,0,.6)}
+.tier--ink .tier__corner{background:var(--coral-2)}
+.tier--ink .tier__eyebrow{color:var(--coral-2)}
+.tier--ink .tier__price{color:var(--cream)}
+.tier--ink .tier__note{color:rgba(237,233,226,.62)}
+.tier--ink .tier__lead{color:rgba(237,233,226,.82)}
+.tier--ink .tier__list{border-color:rgba(237,233,226,.18)}
+.tier--ink .tier__list li::before{content:"\2014";color:var(--coral-2)}
+.tier--ink .link{color:var(--cream);border-color:rgba(237,233,226,.3)}
+.tier--ink .link:hover{color:var(--cream);border-color:var(--cream)}
+
+.tier--coral{background:var(--coral);color:var(--cream)}
+.tier--coral:hover{box-shadow:0 26px 50px -30px rgba(138,54,22,.55)}
+.tier--coral .tier__corner{background:var(--ink)}
+.tier--coral .tier__eyebrow{color:rgba(237,233,226,.8)}
+.tier--coral .tier__price{color:var(--cream)}
+.tier--coral .tier__note{color:rgba(237,233,226,.78)}
+.tier--coral .tier__lead{color:rgba(237,233,226,.92)}
+.tier--coral .tier__list{border-color:rgba(237,233,226,.32)}
+.tier--coral .tier__list li::before{content:"\2014";color:var(--cream)}
+.tier--coral .link{color:var(--cream);border-color:rgba(237,233,226,.4)}
+.tier--coral .link:hover{color:var(--cream);border-color:var(--cream)}
+
 /* ---- project rows (home + travaux) ---------------------------------------*/
 .proj{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(22px,4vw,64px);align-items:center;padding:clamp(26px,3vw,42px) 0;border-top:1px solid var(--line)}
 .proj:last-child{border-bottom:1px solid var(--line)}
