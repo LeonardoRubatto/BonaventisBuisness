@@ -51,6 +51,16 @@
       var rect=track.getBoundingClientRect();
       var scrollable=Math.max(1,track.offsetHeight-window.innerHeight);
       var target=clamp(-rect.top/scrollable,0,1);
+      /* Mobile only, by design: this whole smoothing mechanism exists to
+         fix touch-flick jerkiness (native momentum scroll delivering
+         position in uneven steps). Desktop scrolling (wheel/trackpad,
+         no OS momentum layer fighting the main thread the same way)
+         never had that complaint, so it keeps the original direct,
+         1:1 scroll-to-progress behaviour — checked fresh every render
+         rather than cached, so resizing across the breakpoint (or
+         rotating a tablet) picks it up immediately. 759px matches the
+         site's one general mobile breakpoint everywhere else. */
+      var isMobile=window.innerWidth<=759;
       /* Chase the scroll-derived target instead of snapping to it every
          frame — raw scroll position (especially touch momentum on mobile)
          made the choreography feel jerky. The catch-up is expressed as a
@@ -69,8 +79,33 @@
          time (ms) to close ~63% of the remaining gap. */
       var TAU=120;
       var settled=story._mokaP==null;
-      var k=settled?1:1-Math.exp(-(dt||16)/TAU);
-      var p=settled?target:story._mokaP+(target-story._mokaP)*k;
+      var p;
+      if(settled||!isMobile){
+        p=target;
+      }else{
+        var dtEff=dt||16;
+        var k=1-Math.exp(-dtEff/TAU);
+        var wanted=story._mokaP+(target-story._mokaP)*k;
+        /* Safety net, not the main fix: the real cause of a big single-
+           frame jump was the mobile track being short enough that one
+           fast flick could cover a large slice of the whole story (see
+           the mobile .moka-story__track height in moka-lab.css) — fixed
+           at the source there. This cap just guards the remaining edge
+           case, a frame that follows a skipped one (dt large, e.g. the
+           main thread busy while native momentum scroll runs): without
+           it, the dt-scaled decay above would close most of a large gap
+           in that one frame — a sudden lurch rather than continued
+           motion. MAXRATE is in progress per ms: 1/350 means even a
+           full 0→1 sweep can't visually complete in under ~350ms, no
+           matter how big a single jump the target made. Loose on
+           purpose — it should essentially never bind now. */
+        var MAXRATE=1/350;
+        var maxStep=MAXRATE*dtEff;
+        var delta=wanted-story._mokaP;
+        if(delta>maxStep)delta=maxStep;
+        else if(delta<-maxStep)delta=-maxStep;
+        p=story._mokaP+delta;
+      }
       if(Math.abs(target-p)<.0004)p=target;
       story._mokaP=p;
       var assemble=ease(range(p,.02,.20));
