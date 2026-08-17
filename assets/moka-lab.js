@@ -47,20 +47,30 @@
     measure();
     if('ResizeObserver' in window)new ResizeObserver(measure).observe(viewport);
 
-    var render=function(){
+    var render=function(dt){
       var rect=track.getBoundingClientRect();
       var scrollable=Math.max(1,track.offsetHeight-window.innerHeight);
       var target=clamp(-rect.top/scrollable,0,1);
       /* Chase the scroll-derived target instead of snapping to it every
-         frame. Raw scroll position (especially touch momentum on mobile,
-         which delivers position in uneven, chunky steps) made the whole
-         choreography feel jerky and mechanical. Lerping the rendered value
-         toward the target each frame turns that into a smooth, delicate
-         glide, and costs nothing while idle: render() reports whether it's
-         still converging, and tick() only keeps scheduling frames while
-         at least one story hasn't settled yet. */
+         frame — raw scroll position (especially touch momentum on mobile)
+         made the choreography feel jerky. The catch-up is expressed as a
+         decay against real elapsed time (dt, ms), not a fixed fraction per
+         frame: during a fast flick, the main thread that runs this rAF
+         loop is often delayed or starved while the OS compositor drives
+         native momentum scrolling, so frames arrive late and unevenly
+         spaced. A fixed per-frame ratio has no idea how much real time
+         just passed, so it either crawls (frames arriving on schedule) or
+         — worse — lets a big gap build up during the flick and then
+         visibly races to close it once frames resume, reading as
+         "detached" from the gesture rather than smoothed. Tying the decay
+         to dt keeps the catch-up consistent in wall-clock time regardless
+         of how choppy frame delivery gets, so it stays visibly tethered
+         to the scroll while still easing out the raw jitter. TAU is the
+         time (ms) to close ~63% of the remaining gap. */
+      var TAU=120;
       var settled=story._mokaP==null;
-      var p=settled?target:story._mokaP+(target-story._mokaP)*.07;
+      var k=settled?1:1-Math.exp(-(dt||16)/TAU);
+      var p=settled?target:story._mokaP+(target-story._mokaP)*k;
       if(Math.abs(target-p)<.0004)p=target;
       story._mokaP=p;
       var assemble=ease(range(p,.02,.20));
@@ -108,10 +118,16 @@
     }
   });
 
-  var tick=function(){
+  var lastT=0;
+  var tick=function(t){
     raf=0;
+    /* dt clamped to 200ms: guards the first-ever frame (lastT still 0)
+       and any long gap (tab backgrounded, rAF throttled) from being
+       read as "a lot of real time passed, snap straight to target". */
+    var dt=lastT?clamp(t-lastT,0,200):16;
+    lastT=t;
     var settling=false;
-    stories.forEach(function(s){if(s._mokaRender&&!reduce&&s._mokaRender())settling=true;});
+    stories.forEach(function(s){if(s._mokaRender&&!reduce&&s._mokaRender(dt))settling=true;});
     if(!reduce)renderProjects();
     if(settling)request();
   };
