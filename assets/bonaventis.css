@@ -90,7 +90,53 @@ html.js [data-reveal].in{opacity:1;transform:none}
 /* ---- header / nav ------------------------------------------------------ */
 .nav{position:sticky;top:0;z-index:40;background:rgba(237,233,226,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav__in{max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,80px);min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
-.nav__brand{font-weight:800;font-size:16px;letter-spacing:.15em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.nav__brand{font-weight:800;font-size:16px;letter-spacing:.15em;color:var(--ink);text-decoration:none;white-space:nowrap;display:inline-block}
+/* ---- header wordmark: diagonal art-clip --------------------------------
+   Same motif as the hero band (BONA/VENTIS split by one diagonal line, same
+   clip-path percentages so the angle reads as the same line site-wide) but
+   a different construction: the hero's lower wedge is FLAT cream letters
+   sitting in front of a separate ink+art rectangle — the art is behind the
+   glyphs. Here there is no rectangle at all (nothing added behind the word,
+   the nav bar's own background shows through everywhere else); the lower
+   wedge instead clips the art image directly INTO the letter strokes via
+   background-clip:text, so the art sits inside the glyphs rather than
+   behind them. Two stacked copies of the same text: .nav__brand-top flows
+   normally and establishes the box size (also what paints the upper wedge —
+   it is otherwise unclipped, but .nav__brand-bottom is painted on top of it
+   afterwards and, being pixel-identical text in the same position, fully
+   overwrites it wherever IT is visible, so only one clip-path is needed).
+   The literal text lives once, in .nav__brand-top; .nav__brand-bottom is a
+   duplicate marked aria-hidden, and the accessible name is carried by the
+   anchor's aria-label instead — the same pattern bonaventis-fx.js already
+   uses for split headings, so a screen reader announces "BONAVENTIS" once,
+   not twice. */
+.nav__brand-in{position:relative;display:inline-block}
+.nav__brand-top{display:block;color:inherit}
+.nav__brand-bottom{
+  position:absolute;inset:0;display:block;
+  clip-path:polygon(0 72%,100% 16%,100% 100%,0 100%);
+  background-image:linear-gradient(100deg,rgba(22,32,43,.4) 0%,rgba(22,32,43,.06) 100%),url('art/cumulus03.jpg');
+  background-size:420% 1500%;background-position:46% 40%;
+  filter:grayscale(.22) saturate(1.08) contrast(1.12);
+  -webkit-background-clip:text;background-clip:text;
+  /* text must be transparent for the clipped background to show at all —
+     without this the glyphs paint solid ink (inherited) straight over the
+     clipped image and the whole lower wedge silently looks like nothing
+     changed, which is exactly what shipped first: right clip-path, right
+     image, invisible, because color was left at its inherited ink. */
+  color:transparent;
+}
+/* background-clip:text is unsupported only in ancient/non-evergreen
+   browsers at this point, but the fallback still has to be a normal,
+   correct rendering: without this the bottom layer would show as invisible
+   text (transparent, with no clipped background to fall back to) rather
+   than the plain solid word it should degrade to. */
+@supports not ((background-clip:text) or (-webkit-background-clip:text)){
+  .nav__brand-bottom{display:none}
+}
+@media print{
+  .nav__brand-bottom{display:none}
+}
 .nav__links{display:flex;align-items:center;gap:clamp(12px,2.2vw,26px);flex-wrap:wrap}
 .nav__link{font-size:14.5px;font-weight:500;color:var(--ink);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;white-space:nowrap}
 
@@ -204,7 +250,33 @@ html.js [data-reveal].in{opacity:1;transform:none}
 .head-row{display:flex;align-items:baseline;gap:16px;margin-bottom:clamp(32px,4vw,52px)}
 
 /* ---- hero ---------------------------------------------------------------*/
-.hero{position:relative;overflow:hidden;background:var(--cream);min-height:clamp(440px,68vh,720px);display:flex;flex-direction:column}
+/* Nothing after the hero may be visible before the first scroll — but the
+   hero's own layout (headline position, band position) is not the thing to
+   change to get that: min-height:100svh directly, tried first, stretched
+   the flex column and pushed the band further down the page than designed,
+   moving it. Kept instead at its original min-height, with the extra room
+   added as padding AFTER the band (the last flex child, already pinned to
+   the bottom via margin-top:auto on .hero__band) — invisible cream space
+   the band sits above, unchanged, rather than something the band's
+   position depends on. max(0,…) because a taller viewport than the 68vh
+   floor needs no extra room at all; the calc can go negative there and the
+   max() clamps it back to zero rather than a negative padding (invalid,
+   and would pull the section that follows up underneath the hero). */
+.hero{
+  position:relative;overflow:hidden;background:var(--cream);
+  min-height:clamp(440px,68vh,720px);
+  padding-bottom:max(0px,calc(100svh - clamp(440px,68vh,720px)));
+  /* the site resets every box to border-box, under which padding is carved
+     OUT of min-height rather than added after it — so the padding above
+     was silently eating into the very room it was meant to add, and the
+     hero came up short of 100svh instead of reaching it. Content-box,
+     scoped to this one rule, is what makes "min-height, then padding on
+     top of that" mean what it says; with padding-bottom starting at 0 this
+     was always visually identical to before under either model, so this
+     is a correctness fix, not a second design change. */
+  box-sizing:content-box;
+  display:flex;flex-direction:column;
+}
 .hero__in{position:relative;z-index:2;padding-top:clamp(40px,6vw,84px);padding-bottom:clamp(30px,4vw,50px)}
 .hero__copy{max-width:640px}
 .hero__lead{margin:22px 0 0;max-width:510px;font-family:var(--serif);font-size:clamp(17.5px,1.3vw,20.5px);line-height:1.62;color:var(--ink-soft)}

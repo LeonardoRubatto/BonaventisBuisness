@@ -126,16 +126,36 @@
          (not a guessed scale constant) so they can never overflow the
          viewport at any width — this is what was cut off on mobile before. */
       var cw=canvas?canvas.clientWidth:9999, ch=canvas?canvas.clientHeight:9999;
-      var remain=1-assemble;
       fragments.forEach(function(el,i){
         var x=Number(el.dataset.x)||0,y=Number(el.dataset.y)||0,r=Number(el.dataset.r)||0;
         var fw=el.offsetWidth||180,fh=el.offsetHeight||56;
         var maxX=Math.max(16,cw/2-fw/2-6),maxY=Math.max(16,ch/2-fh/2-6);
+        /* Each fragment gets its own slice of the assembly window instead of
+           all six moving in lockstep — the scattered material now converges
+           the way a handful of things actually get gathered, one after the
+           other, rather than as a single collapsing formation. */
+        var ui=ease(range(p,.02+i*.013,.20+i*.013));
+        var remain=1-ui;
+        /* …and each travels a quadratic bezier towards the centre rather
+           than a straight lerp: the control point is the midpoint of its own
+           start vector pushed perpendicular to it, alternating side, so the
+           six arrive on arcs that sweep in from different directions. Same
+           technique as the fx-path curve in bonaventis-fx.js — the anchors
+           are known, the handle is derived from them, nothing is hard-coded
+           per fragment, so it holds at every viewport width. */
+        var len=Math.sqrt(x*x+y*y)||1;
+        var amp=Math.min(160,len*.44)*(i%2?1:-1);
+        var ctrlX=x*.5+(-y/len)*amp, ctrlY=y*.5+(x/len)*amp;
+        var mt=1-ui;
+        var bx=mt*mt*x+2*mt*ui*ctrlX;   /* end point is the centre, (0,0), */
+        var by=mt*mt*y+2*mt*ui*ctrlY;   /* so its term drops out entirely   */
         var drift=(i%2?1:-1)*10*range(p,0,.14);
-        var ox=clamp(x*remain+drift,-maxX,maxX);
-        var oy=clamp(y*remain,-maxY,maxY);
-        el.style.transform='translate3d(calc(-50% + '+ox.toFixed(1)+'px),calc(-50% + '+oy.toFixed(1)+'px),0) rotate('+(r*remain).toFixed(2)+'deg) scale('+(1-.07*assemble).toFixed(3)+')';
-        el.style.opacity=(fadeSources*(.72+.28*(1-assemble))).toFixed(3);
+        var ox=clamp(bx+drift*remain,-maxX,maxX);
+        var oy=clamp(by,-maxY,maxY);
+        /* a little extra spin along the arc, unwinding to flat on arrival */
+        var rot=r*remain+amp*.055*remain*ui*4;
+        el.style.transform='translate3d(calc(-50% + '+ox.toFixed(1)+'px),calc(-50% + '+oy.toFixed(1)+'px),0) rotate('+rot.toFixed(2)+'deg) scale('+(1-.07*assemble).toFixed(3)+')';
+        el.style.opacity=(fadeSources*(.72+.28*remain)).toFixed(3);
       });
       if(endcard){endcard.style.opacity=finish.toFixed(3);endcard.style.transform='translate(-50%,'+(28-28*finish).toFixed(1)+'px)';}
 

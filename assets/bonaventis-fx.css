@@ -1,0 +1,432 @@
+/* ==========================================================================
+   BONAVENTIS — FX layer
+   Four scroll/viewport-driven effects, adapted (not copied) from published
+   demos. Every one of them was originally written against a library — GSAP
+   in three cases, Three.js in the fourth. None of that is used here: this
+   site has no runtime dependency and its own copy sells "une architecture
+   légère, sans dépendances inutiles", so each effect was re-derived from
+   the source technique and rewritten in the same plain-CSS + single-rAF
+   idiom as moka-lab.js. Sources are credited in mentions-legales.html.
+
+     fx-split  — per-character reveal under a per-line mask.
+                 After "Animated Continuous Sections with GSAP Observer"
+                 (GreenSock, codepen XWzRraJ), which uses SplitText plus an
+                 .outer/.inner counter-translate mask.
+                 Adapted: entry-driven (IntersectionObserver) instead of
+                 section-hijack driven, because this site keeps native
+                 scroll; masks are computed per rendered line so the effect
+                 survives reflow at any width.
+
+     fx-wave   — liquid multi-point bezier fill behind a block.
+                 After "SVG Shape Overlays" (GreenSock, codepen qBedXpg,
+                 itself forked from osublake's BYwgBg).
+                 Adapted: not a fixed fullscreen click-toggled curtain but a
+                 per-block, scroll-triggered background in this site's own
+                 palette — the curve construction (10 points, midpoint
+                 control handles, per-point random delay) is what is kept.
+
+     fx-type   — text rendered as drifting flowers / bubbles.
+                 After Codrops "Typing Effects with Three.js", demos 2 and 3
+                 (uuuulala).
+                 Adapted: the original samples a 2D canvas of the text to
+                 decide where to place instances — that sampling step is the
+                 part kept; the WebGL instanced meshes it feeds are replaced
+                 by 2D-canvas sprites, so there is no Three.js, no CDN, no
+                 shader and no texture file. Real text stays in the DOM.
+
+     fx-path   — an element travelling a cubic bezier as you scroll.
+                 After "Paths & Control Points" (betawaxx, codepen JoGZQLZ).
+                 Adapted: the demo's draggable control-point editor is
+                 tooling, not effect, and is dropped; what is kept is
+                 measuring anchors from real DOM boxes and deriving default
+                 control points from them, so the curve reflows with the
+                 layout. Bezier evaluation is ~10 lines instead of
+                 MotionPathPlugin.
+
+   TO REMOVE THE WHOLE FX LAYER: delete this file's <link>, delete
+   assets/bonaventis-fx.js's <script>, and delete the
+   <section id="digital-era"> block from the three index.html files.
+   Nothing else depends on either file; every effect below is additive and
+   every one of them has a visible, static, no-JS resting state.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   fx-split — masked per-character heading reveal
+   ========================================================================== */
+
+/* Nothing is hidden until the script has actually split the element and
+   marked it ready, so a heading is never invisible because of a JS failure,
+   a crawler, or print. */
+/* The mask needs slack top and bottom, and the amount is not cosmetic: this
+   site sets line-height below 1 on its display faces (.h-page is .95), so the
+   line box is SHORTER than the glyphs in it and a bare overflow:hidden would
+   shear accents off the top and descenders off the bottom at rest. The
+   padding buys that slack back and the equal negative margin gives it back to
+   the layout, so surrounding spacing is unchanged. The lower bound is roughly
+   the font's overshoot (~.09em); the upper bound is whatever still lets a
+   char translated down by 135% clear the mask completely. .12em / .18em sits
+   inside both, at every heading size on the site. */
+.fx-line{display:block;overflow:hidden;padding:.18em 0 .12em;margin:-.30em 0 0}
+/* Giving the slack back is fiddlier than one negative margin, because two
+   adjoining negative margins COLLAPSE to the most negative rather than
+   summing: a plain -.18em/-.12em pair would only claw back .18em of the
+   .30em added between two lines, so every multi-line heading would quietly
+   gain .12em of leading per line break. So the between-lines case carries
+   the whole -.30em, and only the outer edges are trimmed to their own side. */
+.fx-line:first-child{margin-top:-.18em}
+.fx-line:last-child{margin-bottom:-.12em}
+/* …and the outer two must not collapse OUT of the heading, which is what
+   they do in normal block flow — measurably shifting every affected
+   heading up by .18em and stretching it by .30em. An independent
+   formatting context stops that. It does not disturb baseline alignment:
+   .head-row aligns its eyebrow and title on the title's first baseline,
+   and that is unchanged. */
+[data-fx-split-ready]{display:flow-root}
+.fx-word{display:inline-block;white-space:pre}
+.fx-char{display:inline-block}
+
+/* --fx-dir is +1 (rise from below) unless something sets it to -1. The
+   #digital-era panels do, so scrolling back up plays the mirror of the way
+   down, exactly as every offset in the source transition is signed by its
+   direction. The mask has slack on both edges, so either sign hides. */
+[data-fx-split-ready] .fx-char{
+  transform:translateY(calc(135% * var(--fx-dir,1)));
+  transition:transform .82s cubic-bezier(.19,1,.22,1);
+  transition-delay:var(--d,0s);
+}
+[data-fx-split-ready].is-in .fx-char{transform:translateY(0)}
+/* a played-out heading should not keep a live transition on every character */
+[data-fx-split-ready].fx-done .fx-char{transition:none}
+
+@media (prefers-reduced-motion: reduce){
+  [data-fx-split-ready] .fx-char{transform:none !important;transition:none !important}
+}
+@media print{
+  [data-fx-split-ready] .fx-char{transform:none !important;transition:none !important}
+}
+
+
+/* ==========================================================================
+   fx-wave — liquid bezier fill behind pricing blocks
+   ========================================================================== */
+
+/* The host block only needs a stacking context and its own content lifted
+   above the canvas; both are set here rather than per page, so adding the
+   effect to a new block stays a one-selector change in the script. */
+.fx-wave-host{position:relative;isolation:isolate}
+.fx-wave{
+  position:absolute;inset:0;z-index:-1;
+  width:100%;height:100%;
+  display:block;pointer-events:none;
+}
+.fx-wave path{fill:var(--fx-wave-a,rgba(180,68,28,.06))}
+.fx-wave path + path{fill:var(--fx-wave-b,rgba(22,32,43,.05))}
+
+/* Per-context tints. Each pair is two washes of the block's OWN palette —
+   the point is texture inside the existing colour, not a second colour
+   competing with it, which is what a literal port of the source demo's
+   orange/pink gradients would have introduced here. */
+.pcard{--fx-wave-a:rgba(180,68,28,.06);--fx-wave-b:rgba(22,32,43,.045)}
+.pcard--outline{--fx-wave-a:rgba(180,68,28,.085);--fx-wave-b:rgba(22,32,43,.05)}
+.tier-row--cream{--fx-wave-a:rgba(180,68,28,.07);--fx-wave-b:rgba(22,32,43,.05)}
+.tier-row--ink{--fx-wave-a:rgba(224,116,47,.13);--fx-wave-b:rgba(237,233,226,.06)}
+.tier-row--coral{--fx-wave-a:rgba(237,233,226,.13);--fx-wave-b:rgba(138,54,22,.3)}
+
+/* .tier-row rows are full-bleed and already paint their own background; the
+   wave sits between that background and the text. */
+.tier-row{isolation:isolate}
+
+
+/* ==========================================================================
+   fx-type — flower / bubble text (the #digital-era section)
+   ========================================================================== */
+
+/* The pinned layout is opt-in and the script opts in: [data-era-live] is set
+   by bonaventis-fx.js the moment it has taken control of this section. Until
+   then — and forever, if the script is blocked, fails or is not loaded at
+   all — the section is an ordinary stacked block of three readable panels in
+   normal flow. Nothing here can leave a tall empty band behind. */
+.era{position:relative;background:var(--ink);color:var(--cream);overflow:clip}
+.era__track{position:relative}
+.era__sticky{position:relative}
+/* doubled from 330svh: at the old height a fast scroll (trackpad flick,
+   a momentum fling) could cross two thresholds before the visitor meant
+   to, skipping a whole phrase — more track per panel is what buys back
+   the room for a deliberate, one-panel-at-a-time scroll instead */
+.era[data-era-live] .era__track{height:660svh}
+.era[data-era-live] .era__sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+
+/* Soft moving ground so the dark band is not a flat rectangle behind the
+   particles — pure CSS, no extra element, no image request. */
+.era__sticky::before{
+  content:"";position:absolute;inset:-20%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(46% 38% at 22% 28%,rgba(224,116,47,.16),transparent 70%),
+    radial-gradient(40% 34% at 78% 72%,rgba(51,98,122,.24),transparent 72%);
+  filter:blur(18px);
+  animation:eraDrift 26s ease-in-out infinite alternate;
+}
+@keyframes eraDrift{
+  from{transform:translate3d(-2%,-1%,0) scale(1)}
+  to{transform:translate3d(2%,1.5%,0) scale(1.06)}
+}
+
+/* ---- the aurora: a drifting jellyfish behind the words -------------------
+   After holtsetio's "Aurelia" (github.com/holtsetio/aurelia) — a moon-
+   jellyfish simulation: a sinusoidally contracting bell, with the seam,
+   oral arms and tentacles run as a verlet particle system evaluated on the
+   GPU via WebGPU compute shaders, through Three.js' WebGPURenderer. None of
+   that runs here — WebGPU isn't universal, Three.js is ~600KB, and a GPU
+   compute pass has no 2D-canvas equivalent — so this keeps only what a
+   single canvas honestly can: the bell's pulse (one shape breathing on a
+   sine needs no GPU) and the trailing-tentacle silhouette, restated as
+   fading dot-strings rather than simulated particles. See the JS for the
+   full account of what was and wasn't carried over.
+   Layered above the always-on ::before blur (the JS-optional base layer,
+   above) and below the panels. */
+.era__aurora{position:absolute;inset:0;z-index:1;width:100%;height:100%;display:block;filter:blur(4px) saturate(1.08);opacity:1;transition:opacity .8s ease}
+/* the real WebGPU render sits ABOVE the 2D fallback (later in the DOM) and
+   is not blurred/saturated the way the plain-canvas approximation is —
+   real volumetric lighting doesn't need the same crutch */
+.era__aurora--gpu{filter:none}
+/* small bubbles trailing the cursor over the water itself — same sprites
+   and idea as hovering a bubble word, just spawned at the pointer instead
+   of sampled from a glyph. Its own z-index between the jellyfish (1,
+   whichever of .era__aurora/--gpu is actually showing) and the text
+   (.era__stage, bumped to 3) rather than DOM order, since which jellyfish
+   layer exists when this canvas is created can change later (the WebGPU
+   one mounts asynchronously, well after this does) — a z-index doesn't
+   care which arrived when. Never intercepts the pointer itself, same as
+   the jellyfish canvas under it — it only ever reads where the pointer
+   already is. */
+.era__ripple{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;pointer-events:none}
+
+/* the scroll cue only means anything while the section is pinned */
+.era__cue{display:none}
+
+.era__eyebrow{
+  margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--coral-2);
+  padding:clamp(30px,5vh,52px) clamp(20px,7vw,96px) 0;
+}
+.era[data-era-live] .era__eyebrow{
+  position:absolute;top:clamp(20px,4vh,44px);left:clamp(16px,5vw,80px);z-index:4;
+  margin:0;padding:0;
+}
+
+.era__stage{position:relative;z-index:3;width:100%;min-width:0}
+.era[data-era-live] .era__stage{height:100%}
+
+/* One flat wrapper per panel — no background layer, no outer/inner mask.
+   You asked to drop the section-swap mechanic in favour of something
+   simpler: each phrase just rises in from below and later rises out, no
+   background change between panels. The JS's only job is deciding WHICH of
+   three states each panel is in — before, active, or after — from scroll
+   position; the actual animation between those states is an ordinary CSS
+   transition, running on its own clock from the moment the class changes.
+   That split matters: scroll position (a mouse-wheel notch, a momentum
+   flick) does not arrive in smooth, even steps, but once a state class has
+   flipped, the transition no longer looks at scroll again until it flips
+   back — so the motion itself can never inherit that jitter, only the
+   decision of when to start.
+   Degrades the same way as everything else here: at rest (no JS, reduced
+   motion, print), no state class is ever applied and every .era__body is
+   simply stacked in normal flow, always in the "active" position. */
+.era__panel,.era__body{min-width:0}
+.era__body{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(16px,2.6vw,28px);text-align:center;width:100%;min-width:0;
+  padding:clamp(64px,10vh,112px) clamp(20px,7vw,96px) clamp(46px,8vh,84px);
+}
+/* visibility isn't used here on purpose — see the JS comment on why hiding
+   is aria-hidden + opacity instead. A stacked panel with opacity:0 and no
+   pointer-events is already invisible and inert. */
+.era[data-era-live] .era__panel{position:absolute;inset:0;display:grid;place-items:center}
+/* Plain crossfade — no wipe, no rise, still deliberately the least amount
+   of "effect" the text itself gets. What DOES get a flourish now is the
+   pair of bubble words, which keep dissolving upward on their own canvas
+   for a while after this fade starts (EXIT_MS in bonaventis-fx.js) — so
+   the duration here stays matched to that and to the camera's own glide
+   to the next vantage (GPU_SCENES' setView duration), all three tuned
+   down together from an earlier pass that read as sluggish. The DEFAULT
+   here (opacity 0) is also "not yet reached", so there is never a frame
+   where [data-era-live] has switched this to the pinned/absolute layout
+   but the script hasn't assigned a state class yet. */
+.era[data-era-live] .era__body{
+  will-change:opacity;
+  opacity:0;
+  transition:opacity .85s ease;
+}
+.era[data-era-live] .era__panel.is-active .era__body{opacity:1}
+
+/* ---- the phrase: a couple of key words in flower/bubble type from the
+   start, the rest of the sentence ordinary readable text — and later, as
+   you keep scrolling through this panel, that rest metamorphoses into the
+   same treatment too, word by word, IN PLACE. No separate big display-size
+   duplicate, no repositioning: every word's particle canvas sits exactly
+   over that word's own rendered box, at that word's own size, so the
+   change is legibly a transformation of the sentence you were already
+   reading rather than a jump to a different, bigger one.
+   This is also the resting, accessible, no-JS state: an ordinary paragraph
+   with a couple of words marked [data-fx-key]. It stays in the DOM and
+   stays visible even with JS on; the script only ever drops a small
+   particle canvas OVER a word (matched to its own rendered box) once it
+   has actually painted something, the same fail-safe contract every other
+   canvas on this site follows. */
+.era__mix{
+  margin:0;max-width:52ch;font-family:var(--serif);font-weight:400;
+  font-size:clamp(36px,3.7vw,45px);line-height:1.56;
+  color:rgba(237,233,226,.94);text-wrap:balance;
+  /* a dark shadow behind light text, not a lighter text colour — legibility
+     has to hold regardless of what's directly behind a given word at a
+     given moment (the jellyfish's own glow, mid-scene, is bright enough to
+     wash out plain cream text without it), and a shadow works the same way
+     against ANY backdrop, unlike trying to sample and react to one */
+  text-shadow:0 1px 3px rgba(10,16,22,.9),0 2px 18px rgba(10,16,22,.85),0 0 2px rgba(10,16,22,.9);
+}
+/* color gets its own transition, same duration as the canvas fade just
+   below, so the glyph dissolving and the particles arriving read as one
+   crossfade rather than the text vanishing a beat before the particles
+   have anything to show */
+.era__w{display:inline-block;position:relative;transition:color .45s ease}
+/* the particle canvas sits over the word once it has sampled it; the word
+   itself is only dimmed (not hidden) so a failed/slow build still reads */
+.era__w canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .45s ease}
+/* text-shadow paints the shape of the GLYPH, independent of color — so
+   .era__mix's shadow (above) was rendering a solid dark silhouette of
+   every word that had already gone transparent for its bubbles, i.e.
+   exactly "black text behind the bubbles". Cancelled right here, per word,
+   the instant it converts; only words still showing as plain type keep
+   the shadow that's actually meant for them. */
+.era__w.fx-type-on{color:transparent;text-shadow:none}
+.era__w.fx-type-on canvas{opacity:1}
+/* the couple of words that are flower/bubble from the very start — sized
+   proportionally to .era__mix (em, not its own clamp) so the two scale
+   together as one system: whatever .era__mix's font-size ends up being,
+   this is always 2.6× it, the same ratio the original two sizes had to
+   each other. The bubble particles are sampled from this element's own
+   rendered size (see makeKeyGlyph), so this is also what determines
+   their size — one number to tune, not two kept in sync by hand. */
+.era__w--key{
+  font-family:var(--sans);font-weight:800;letter-spacing:-.025em;
+  font-size:2.6em;line-height:1;color:var(--cream);
+  vertical-align:-.14em;margin:0 .12em;
+  /* longest key word in any language ("rencontrer") at 2.6em was measured
+     wider than a narrow phone's own text column — this is the fallback
+     for it, not the fix; the real fix is the smaller mobile ratio below */
+  overflow-wrap:break-word;word-break:break-word;
+}
+
+.era__note{
+  margin:0;max-width:56ch;font-family:var(--serif);
+  font-size:clamp(15.5px,1.35vw,19px);line-height:1.68;color:rgba(237,233,226,.76);
+}
+/* panel 3 only, the plain resolution heading — unrelated to the metamorphosis
+   above, kept at the site's usual big display scale */
+.era__phrase{
+  margin:0;font-weight:700;letter-spacing:-.035em;line-height:1.03;
+  font-size:clamp(30px,6.2vw,84px);color:var(--cream);
+}
+.era__phrase--serif{font-family:var(--serif);font-weight:500;letter-spacing:-.045em;max-width:17ch;margin:0}
+.era__body .link{color:var(--coral-2);border-color:rgba(224,116,47,.4)}
+.era__body .link:hover{color:var(--cream);border-color:var(--cream)}
+
+@media (max-width:759px){
+  /* gated exactly like the desktop height above — an ungated override here
+     would put a 300svh empty track back under the resting state.
+     Longer again than desktop's own (now-doubled) 660svh, for the same
+     reason it already was before the doubling: an `svh` is a fraction of
+     the same short mobile viewport a thumb-flick covers in one go, so the
+     same track height that reads as unhurried on a tall desktop window
+     blows past every trigger in a couple of flicks on a phone — the
+     transition (crossfade + bubble dissolve + camera glide, all
+     EXIT_MS/1.4s-ish) doesn't get the scroll room to actually play out
+     before the next one fires. More height per panel is what buys that
+     room back; the trigger logic itself needs nothing changed, it
+     already just reads a threshold off however tall this is. */
+  .era[data-era-live] .era__track{height:960svh}
+  .era__body{padding:clamp(74px,12vh,98px) 22px clamp(58px,10vh,76px)}
+  .era__mix{font-size:35px}
+  /* still em (still tied to .era__mix above, still one number to tune —
+     see the comment on .era__w--key itself), just a smaller ratio than
+     desktop's 2.6em: the text column here is only ~280-330px wide, and
+     the longest key word at 2.6× a 35px phrase overflows it outright */
+  .era__w--key{font-size:1.5em}
+  .era__note{font-size:15.5px}
+}
+
+/* ---- fx-type / era resting state ----------------------------------------
+   The pinned layout above is gated entirely on [data-era-live], which only
+   bonaventis-fx.js sets and which it never sets under reduced motion. So
+   "no JS", "script blocked" and "reduced motion" all land on the same
+   resting state with no overrides at all: three panels stacked in normal
+   flow, .era__mix as the one visible, readable copy of each phrase, nothing
+   hidden and no tall empty band. The rules below only handle the two cases
+   that state cannot express by itself. */
+@media (prefers-reduced-motion: reduce){
+  .era__sticky::before{animation:none}
+}
+@media print{
+  .era{background:#fff;color:#000}
+  .era__sticky::before{display:none}
+  .era__aurora{display:none !important}
+  .era__mix,.era__note{color:#000}
+  .era__w--key{color:#000}
+  /* if the script did run, undo the pin so all three panels print */
+  .era[data-era-live] .era__track{height:auto !important}
+  .era[data-era-live] .era__sticky{position:static !important;height:auto !important}
+  .era[data-era-live] .era__stage{display:block !important;height:auto !important}
+  .era[data-era-live] .era__panel{position:static !important;visibility:visible !important;display:block !important}
+  .era[data-era-live] .era__body{transform:none !important;opacity:1 !important}
+  .era[data-era-live] .era__eyebrow{position:static !important}
+}
+
+
+/* ==========================================================================
+   fx-path — marker travelling a curve through the process steps
+   ========================================================================== */
+
+.fx-path-host{position:relative}
+.fx-path-svg{
+  position:absolute;inset:0;z-index:0;width:100%;height:100%;
+  pointer-events:none;overflow:visible;
+}
+.fx-path-line{
+  fill:none;stroke:var(--coral);stroke-width:1.5;opacity:.4;
+  stroke-linecap:round;
+}
+.section--dark .fx-path-line{stroke:var(--coral-2);opacity:.5}
+/* the marker has no position until the first scroll frame has placed it —
+   until then it must not sit parked at the origin */
+.fx-path-dot,.fx-path-glow{opacity:0}
+.fx-path-dot{fill:var(--coral)}
+.section--dark .fx-path-dot{fill:var(--coral-2)}
+.fx-path-glow{fill:var(--coral)}
+.section--dark .fx-path-glow{fill:var(--coral-2)}
+
+/* the steps/timeline content must sit above the drawn curve */
+.fx-path-host .timeline__item,
+.fx-path-host .step{position:relative;z-index:1}
+
+/* The stock .timeline draws its own straight connector; when the curve is
+   active that flat rule is redundant and you would see both. Both forms of
+   the selector are needed — the host may BE the .timeline (it is, on the
+   studio pages) or merely contain one. Desktop only: below 760px the
+   timeline is a vertical list, the curve is not drawn at all, and the
+   straight rule is the clearer reading aid. */
+@media (min-width:761px){
+  .fx-path-host.fx-path-on.timeline::before,
+  .fx-path-host.fx-path-on .timeline::before{opacity:0}
+}
+@media (max-width:760px){
+  .fx-path-svg{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  .fx-path-svg{display:none}
+  .fx-path-host.fx-path-on.timeline::before,
+  .fx-path-host.fx-path-on .timeline::before{opacity:1}
+}
+@media print{
+  .fx-path-svg{display:none}
+}

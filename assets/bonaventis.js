@@ -59,7 +59,20 @@
    * and only refreshed on scroll/resize, never read on every pointermove. */
   var inkNodes = Array.prototype.slice.call(document.querySelectorAll('[data-ink]'));
   if (inkNodes.length && !reduce && pointerFine) {
-    var ART = "url('assets/art/alexandra-fox.jpg')";
+    /* Resolved against THIS FILE, not against the page. A url() written into
+       an inline style resolves against the document, so the literal
+       'assets/art/…' this used to be became '/en/assets/art/…' on the English
+       and Italian homepages and 404'd. The veil gradient underneath it is
+       transparent in the middle, so with the image missing the hovered
+       letters showed the cream page background straight through — they went
+       white, ringed by the gradient's navy. The script always sits in
+       assets/, so deriving the path from its own src is correct at any
+       page depth. */
+    var ART = "url('" + (function () {
+      var s = document.currentScript;
+      try { return s ? new URL('art/alexandra-fox.jpg', s.src).href : 'assets/art/alexandra-fox.jpg'; }
+      catch (e) { return 'assets/art/alexandra-fox.jpg'; }
+    }()) + "')";
     var ptr = { x: -9999, y: -9999, live: false };
     var MARGIN = 160;
     var rects = [];
