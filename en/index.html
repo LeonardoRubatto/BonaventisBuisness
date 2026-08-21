@@ -23,23 +23,27 @@
 <meta property="og:image" content="https://bonaventis.com/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Bonaventis — a website that makes what you do instantly clear.">
+<meta property="og:image:alt" content="Bonaventis — website builder for you.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bonaventis — a website that makes what you do instantly clear">
+<meta name="twitter:description" content="Bonaventis turns your ideas, copy and scattered channels into a clear, distinctive online presence that is entirely yours.">
+<meta name="twitter:image" content="https://bonaventis.com/assets/og.png">
 
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="../assets/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="../assets/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="mask-icon" href="../assets/mask-icon.svg" color="#16202B">
+<link rel="icon" href="../assets/favicon.svg?v=2" type="image/svg+xml">
+<link rel="icon" href="../assets/favicon-32x32.png?v=2" sizes="32x32" type="image/png">
+<link rel="icon" href="../assets/favicon-16x16.png?v=2" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=2">
+<link rel="mask-icon" href="../assets/mask-icon.svg?v=2" color="#16202B">
 <link rel="manifest" href="../site.webmanifest">
 <meta name="msapplication-TileColor" content="#16202B">
 
-<link rel="stylesheet" href="../assets/bonaventis.css?v=28">
+<link rel="stylesheet" href="../assets/bonaventis.css?v=31">
 <!-- MOKA experiment (scroll-driven Atelier Moka case study) — delete this
      <link>, the <section id="direction-lab">…</section> below, and the
      matching <script> near </body> to remove it with zero effect on the
      rest of the site. -->
 <link rel="stylesheet" href="../assets/moka-lab.css?v=7">
+<link rel="stylesheet" href="../assets/bonaventis-fx.css?v=18">
 
 <script type="application/ld+json">
 {
@@ -84,7 +88,7 @@
 
 <header class="nav">
   <div class="nav__in">
-    <a class="nav__brand" href="index.html">BONAVENTIS</a>
+    <a class="nav__brand" href="index.html" aria-label="BONAVENTIS"><span class="nav__brand-in" aria-hidden="true"><span class="nav__brand-top">BONAVENTIS</span><span class="nav__brand-bottom">BONAVENTIS</span></span></a>
     <details class="nav__toggle-wrap">
       <summary class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></summary>
     </details>
@@ -122,6 +126,41 @@
       </div>
       <div class="hero__band-top"><span class="hero__band-word">BONA<wbr>VENTIS</span></div>
       <div class="hero__band-bottom"><span class="hero__band-word">BONA<wbr>VENTIS</span></div>
+    </div>
+  </section>
+
+  <!-- Digital era ------------------------------------------------------
+       Choreography + particle canvases live in assets/bonaventis-fx.*.
+       Remove this whole <section> together with that CSS link and script to
+       deactivate it. Nothing else on the page depends on it. -->
+  <section id="digital-era" class="era" data-era>
+    <div class="era__track">
+      <div class="era__sticky">
+        <p class="era__eyebrow">Where it starts</p>
+
+        <div class="era__stage">
+          <div class="era__panel" data-era-panel data-fx-kind="bubbles">
+            <div class="era__body">
+              <p class="era__mix"><span class="era__w">People</span> <span class="era__w era__w--key" data-fx-key="look">look</span> <span class="era__w">you</span> <span class="era__w">up</span> <span class="era__w">before</span> <span class="era__w">they</span> <span class="era__w era__w--key" data-fx-key="meet">meet</span> <span class="era__w">you</span>.</p>
+            </div>
+          </div>
+
+          <div class="era__panel" data-era-panel data-fx-kind="bubbles">
+            <div class="era__body">
+              <p class="era__mix"><span class="era__w">Three</span> <span class="era__w era__w--key" data-fx-key="seconds">seconds</span> <span class="era__w">to</span> <span class="era__w">decide</span> <span class="era__w">whether</span> <span class="era__w">you</span> <span class="era__w">look</span> <span class="era__w era__w--key" data-fx-key="serious">serious</span>.</p>
+            </div>
+          </div>
+
+          <div class="era__panel" data-era-panel>
+            <div class="era__body">
+              <h2 class="era__phrase era__phrase--serif" data-fx-split data-fx-manual>What the screen shows decides whether anyone walks in.</h2>
+              <p class="era__note">A profile, a review, a screenshot: most of the decision happens before the first conversation. That is not a reason to overdo it — it is a reason to make plain what you do, who for, and how to reach you.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="era__cue" aria-hidden="true"><span>Scroll</span><i></i></p>
+      </div>
     </div>
   </section>
 
@@ -522,9 +561,10 @@
   </div>
 </footer>
 
-<script src="../assets/bonaventis.js?v=5" defer></script>
+<script src="../assets/bonaventis.js?v=6" defer></script>
+<script src="../assets/bonaventis-fx.js?v=22" defer></script>
 <!-- MOKA experiment — remove this line together with the CSS <link> and
      the #direction-lab section to deactivate it. -->
-<script src="../assets/moka-lab.js?v=11" defer></script>
+<script src="../assets/moka-lab.js?v=12" defer></script>
 </body>
 </html>

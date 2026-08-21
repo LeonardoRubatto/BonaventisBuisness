@@ -22,16 +22,20 @@
 <meta property="og:image" content="https://bonaventis.com/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Bonaventis — un solo interlocutore, un sito che vi appartiene.">
+<meta property="og:image:alt" content="Bonaventis — website builder for you.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="../assets/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="../assets/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="mask-icon" href="../assets/mask-icon.svg" color="#16202B">
+<meta name="twitter:title" content="Contatti — parliamo del vostro progetto · Bonaventis">
+<meta name="twitter:description" content="Poche righe bastano per iniziare. Risposta scritta entro un giorno lavorativo.">
+<meta name="twitter:image" content="https://bonaventis.com/assets/og.png">
+<link rel="icon" href="../assets/favicon.svg?v=2" type="image/svg+xml">
+<link rel="icon" href="../assets/favicon-32x32.png?v=2" sizes="32x32" type="image/png">
+<link rel="icon" href="../assets/favicon-16x16.png?v=2" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=2">
+<link rel="mask-icon" href="../assets/mask-icon.svg?v=2" color="#16202B">
 <link rel="manifest" href="../site.webmanifest">
 <meta name="msapplication-TileColor" content="#16202B">
-<link rel="stylesheet" href="../assets/bonaventis.css?v=28">
+<link rel="stylesheet" href="../assets/bonaventis.css?v=31">
+<link rel="stylesheet" href="../assets/bonaventis-fx.css?v=18">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,7 +52,7 @@
 
 <header class="nav">
   <div class="nav__in">
-    <a class="nav__brand" href="index.html">BONAVENTIS</a>
+    <a class="nav__brand" href="index.html" aria-label="BONAVENTIS"><span class="nav__brand-in" aria-hidden="true"><span class="nav__brand-top">BONAVENTIS</span><span class="nav__brand-bottom">BONAVENTIS</span></span></a>
     <details class="nav__toggle-wrap">
       <summary class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></summary>
     </details>
@@ -106,11 +110,11 @@
 
           <div class="form-grid">
             <label class="field">
-              <span>Nome</span>
+              <span>Nome<span aria-hidden="true"> *</span></span>
               <input type="text" name="name" autocomplete="name" required placeholder="Il vostro nome">
             </label>
             <label class="field">
-              <span>Email</span>
+              <span>Email<span aria-hidden="true"> *</span></span>
               <input type="email" name="email" autocomplete="email" required placeholder="voi@azienda.com">
             </label>
           </div>
@@ -121,9 +125,10 @@
           </label>
 
           <label class="field">
-            <span>Cosa deve fare il sito</span>
+            <span>Cosa deve fare il sito<span aria-hidden="true"> *</span></span>
             <textarea name="message" rows="6" required placeholder="Cos'è, per chi, e quando vorreste vederlo online."></textarea>
           </label>
+          <p class="small" style="margin:0;">* campo obbligatorio</p>
 
           <div class="btn-row" style="margin-top:4px;">
             <button class="btn" type="submit" data-contact-submit style="background-color:var(--ink);background-image:linear-gradient(rgba(22,32,43,.88),rgba(22,32,43,.88)),url('../assets/art/susan-j-harris.jpg');background-size:cover;background-position:50% 50%;">Invia &rarr;</button>
@@ -163,6 +168,7 @@
   </div>
 </footer>
 
-<script src="../assets/bonaventis.js?v=5" defer></script>
+<script src="../assets/bonaventis.js?v=6" defer></script>
+<script src="../assets/bonaventis-fx.js?v=22" defer></script>
 </body>
 </html>

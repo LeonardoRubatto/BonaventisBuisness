@@ -22,16 +22,20 @@
 <meta property="og:image" content="https://bonaventis.com/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Bonaventis — un solo interlocutore, un sito che vi appartiene.">
+<meta property="og:image:alt" content="Bonaventis — website builder for you.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="../assets/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="../assets/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="mask-icon" href="../assets/mask-icon.svg" color="#16202B">
+<meta name="twitter:title" content="Note legali &amp; crediti · Bonaventis">
+<meta name="twitter:description" content="Titolare, hosting e privacy per bonaventis.com.">
+<meta name="twitter:image" content="https://bonaventis.com/assets/og.png">
+<link rel="icon" href="../assets/favicon.svg?v=2" type="image/svg+xml">
+<link rel="icon" href="../assets/favicon-32x32.png?v=2" sizes="32x32" type="image/png">
+<link rel="icon" href="../assets/favicon-16x16.png?v=2" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=2">
+<link rel="mask-icon" href="../assets/mask-icon.svg?v=2" color="#16202B">
 <link rel="manifest" href="../site.webmanifest">
 <meta name="msapplication-TileColor" content="#16202B">
-<link rel="stylesheet" href="../assets/bonaventis.css?v=28">
+<link rel="stylesheet" href="../assets/bonaventis.css?v=31">
+<link rel="stylesheet" href="../assets/bonaventis-fx.css?v=18">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,7 +52,7 @@
 
 <header class="nav">
   <div class="nav__in">
-    <a class="nav__brand" href="index.html">BONAVENTIS</a>
+    <a class="nav__brand" href="index.html" aria-label="BONAVENTIS"><span class="nav__brand-in" aria-hidden="true"><span class="nav__brand-top">BONAVENTIS</span><span class="nav__brand-bottom">BONAVENTIS</span></span></a>
     <details class="nav__toggle-wrap">
       <summary class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></summary>
     </details>
@@ -136,7 +140,17 @@
       <div class="fact"><dt class="fact__k">Susan J Harris</dt><dd class="fact__v" style="margin:0;">Contatti — sfondo del pulsante di invio</dd></div>
     </dl>
 
-    <h2 class="h2" style="margin-top:48px;font-size:20px;">Crediti — caratteri tipografici</h2>
+        <h2 class="h2" style="margin-top:48px;font-size:20px;">Crediti — effetti e tecniche</h2>
+    <p class="body-serif" style="margin-top:16px;max-width:62ch;">Quattro effetti visivi del sito si ispirano a demo pubblicate da altri autori. Nessun codice è stato ripreso così com’è: le librerie da cui dipendono (GSAP, Three.js) non sono caricate qui, e ogni effetto è stato riscritto a mano per questo sito. Le tecniche originali restano merito dei loro autori.</p>
+    <dl class="facts" style="margin-top:16px;max-width:920px;">
+      <div class="fact"><dt class="fact__k">GreenSock — &laquo;&nbsp;Animated Continuous Sections&nbsp;&raquo; (codepen XWzRraJ)</dt><dd class="fact__v" style="margin:0;">Comparsa dei titoli lettera per lettera sotto una maschera di riga</dd></div>
+      <div class="fact"><dt class="fact__k">GreenSock — &laquo;&nbsp;SVG Shape Overlays&nbsp;&raquo; (codepen qBedXpg), d&#39;apr&egrave;s Blake Bowen</dt><dd class="fact__v" style="margin:0;">Riempimento liquido sullo sfondo dei blocchi tariffari</dd></div>
+      <div class="fact"><dt class="fact__k">Codrops / uuuulala — &laquo;&nbsp;Typing Effects with Three.js&nbsp;&raquo;</dt><dd class="fact__v" style="margin:0;">Frasi composte da fiori e bolle, sezione « Il punto di partenza »</dd></div>
+      <div class="fact"><dt class="fact__k">betawaxx — &laquo;&nbsp;Paths &amp; Control Points&nbsp;&raquo; (codepen JoGZQLZ)</dt><dd class="fact__v" style="margin:0;">Indicatore che percorre una curva lungo le tappe del progetto, pagina Studio</dd></div>
+      <div class="fact"><dt class="fact__k">holtsetio — «Aurelia» (github.com/holtsetio/aurelia), licenza MIT</dt><dd class="fact__v" style="margin:0;">Medusa alla deriva sullo sfondo, sezione «Il punto di partenza» — il codice sorgente reale (WebGPU, Three.js, fisica a particelle verlet), compilato dal repository originale e caricato solo nei browser compatibili con WebGPU; altrove, una ricostruzione su tela 2D (sagoma della campana e tentacoli, senza la simulazione) prende il suo posto. Il punto d’ingresso è stato adattato per integrarsi in questa pagina invece di riempire tutto lo schermo; la simulazione stessa non è stata modificata.</dd></div>
+    </dl>
+
+<h2 class="h2" style="margin-top:48px;font-size:20px;">Crediti — caratteri tipografici</h2>
     <p class="body-serif" style="margin-top:16px;max-width:56ch;">Archivo e Source Serif 4 sono distribuiti con licenza SIL Open Font License 1.1. I file e la relativa licenza sono inclusi in <code>assets/fonts/</code>.</p>
 
     <p class="small" style="margin-top:48px;">Ultimo aggiornamento: 17 agosto 2026</p>
@@ -172,6 +186,7 @@
   </div>
 </footer>
 
-<script src="../assets/bonaventis.js?v=5" defer></script>
+<script src="../assets/bonaventis.js?v=6" defer></script>
+<script src="../assets/bonaventis-fx.js?v=22" defer></script>
 </body>
 </html>
