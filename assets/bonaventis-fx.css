@@ -155,7 +155,15 @@
    to, skipping a whole phrase — more track per panel is what buys back
    the room for a deliberate, one-panel-at-a-time scroll instead */
 .era[data-era-live] .era__track{height:660svh}
-.era[data-era-live] .era__sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+/* height:100svh alone left a flat, undecorated sliver of the plain .era
+   background exposed under the pinned scene on iOS Safari: svh is fixed to
+   the shortest possible viewport (toolbars expanded), so the moment the
+   toolbar auto-hides mid-scroll and the real viewport grows past it, the
+   sticky box stops covering the bottom of the screen. The dvh line right
+   after tracks whatever the toolbar is doing at that instant instead, so
+   the pinned scene always reaches the true edge; kept svh first as the
+   safe fallback for engines without dvh support. */
+.era[data-era-live] .era__sticky{position:sticky;top:0;height:100svh;height:100dvh;overflow:hidden;display:grid;place-items:center}
 
 /* Soft moving ground so the dark band is not a flat rectangle behind the
    particles — pure CSS, no extra element, no image request. */
