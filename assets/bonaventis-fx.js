@@ -885,10 +885,23 @@
       if (!track || !panels.length) return;
       var n = panels.length;
       var seg = 1 / n;
+      /* same breakpoint as this section's own CSS (max-width:759px in
+         bonaventis-fx.css) — the couple of mobile-only cuts below (the
+         WebGPU jellyfish, the SVG text warp) both trade a purely
+         decorative extra for real per-frame cost on exactly the class of
+         device least able to absorb it. */
+      var isMobileEra = mq('(max-width:759px)');
 
       var kinds = panels.map(function (p) { return p.getAttribute('data-fx-kind'); });
+      /* On mobile the couple of key words (.era__w--key) skip the particle
+         canvas altogether and just stay plain, bold text — coloured coral
+         by CSS (see .era__w--key in bonaventis-fx.css) instead of relying
+         on the bubble sprites' own pale, low-contrast palette to read on a
+         small, often glare-lit screen. Every other per-frame cost tied to
+         this (building the glyph's own canvas, sampling it, animating and
+         redrawing its particles 60 times a second) disappears with it. */
       var words = panels.map(function (p) {
-        if (!p.getAttribute('data-fx-kind')) return [];
+        if (!p.getAttribute('data-fx-kind') || isMobileEra) return [];
         return [].slice.call(p.querySelectorAll('.era__w')).map(function (el) {
           var glyph = fxType.makeKeyGlyph(el, p.getAttribute('data-fx-kind'));
           return glyph && { el: el, glyph: glyph, key: el.classList.contains('era__w--key') };
@@ -1034,20 +1047,32 @@
          one is what's actually visible — see warpAt()) and the active
          panel's own box. Zero at rest, so there is no permanent softening
          of the type; it only ever appears while something is genuinely
-         passing close, and only ever as much as it is close. */
-      var warpSvg = doc.createElementNS(SVGNS, 'svg');
-      warpSvg.setAttribute('width', '0');
-      warpSvg.setAttribute('height', '0');
-      warpSvg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
-      var warpId = 'era-warp-' + Math.random().toString(36).slice(2, 8);
-      warpSvg.innerHTML =
-        '<filter id="' + warpId + '" x="-20%" y="-20%" width="140%" height="140%">' +
-        '<feTurbulence type="fractalNoise" baseFrequency="0.012 0.028" numOctaves="2" seed="7" result="n"/>' +
-        '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
-        '</filter>';
-      era.appendChild(warpSvg);
-      var warpMap = warpSvg.querySelector('feDisplacementMap');
-      era.querySelectorAll('.era__body').forEach(function (b) { b.style.filter = 'url(#' + warpId + ')'; });
+         passing close, and only ever as much as it is close.
+         Skipped entirely on mobile (isMobileEra): feTurbulence +
+         feDisplacementMap is real per-frame raster work — its `scale`
+         changes every frame below, and most mobile browsers have no
+         hardware-accelerated path for this filter pair at all, so it was
+         paying for a subtle hover-proximity nicety by recomputing an
+         expensive noise+displacement pass on the section's own readable
+         text, 60 times a second, on exactly the devices least able to
+         absorb that cost. warpMap stays null; applyWarp() below no-ops
+         the instant it finds that, so nothing else here needs to know. */
+      var warpMap = null;
+      if (!isMobileEra) {
+        var warpSvg = doc.createElementNS(SVGNS, 'svg');
+        warpSvg.setAttribute('width', '0');
+        warpSvg.setAttribute('height', '0');
+        warpSvg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+        var warpId = 'era-warp-' + Math.random().toString(36).slice(2, 8);
+        warpSvg.innerHTML =
+          '<filter id="' + warpId + '" x="-20%" y="-20%" width="140%" height="140%">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.012 0.028" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+          '</filter>';
+        era.appendChild(warpSvg);
+        warpMap = warpSvg.querySelector('feDisplacementMap');
+        era.querySelectorAll('.era__body').forEach(function (b) { b.style.filter = 'url(#' + warpId + ')'; });
+      }
 
       /* current jellyfish position, in VIEWPORT px — kept up to date by
          both renderAurora() (2D mode) and setInterval-free polling of the
@@ -1059,6 +1084,7 @@
          projection of the real camera. */
       var jellyScreen = { x: -9999, y: -9999 };
       var applyWarp = function () {
+        if (!warpMap) return; /* mobile: no filter was ever attached, nothing to drive */
         /* the actual set glyphs — .era__mix or, on the plain panel,
            .era__phrase — not .era__body, which is a flex box padded out to
            most of the sticky viewport: measured against THAT, the
@@ -1347,8 +1373,18 @@
 
       /* reduced-motion is already handled: this whole module returned at
          its very first line if `reduce` was true, so reaching here already
-         guarantees motion is wanted — only WebGPU support is left to check */
-      if (window.navigator && navigator.gpu) {
+         guarantees motion is wanted — only WebGPU support is left to check.
+         isMobileEra excludes mobile outright regardless of navigator.gpu:
+         plenty of phones expose that property with no real hardware
+         WebGPU backend behind it, so `import()`ing this pulls in Three.js
+         (~600KB) and then quietly falls back to running its verlet
+         physics sim (tens of thousands of springs, a real "physics bake"
+         per the comment above) over WebGL2 instead — on a phone GPU, THAT
+         is the mobile lag this was meant to be strictly additive to, not
+         the cause of. The 2D canvas above already looks and behaves
+         correctly on its own; the upgrade is only worth its cost on a
+         screen big enough that it was actually designed and tuned for. */
+      if (window.navigator && navigator.gpu && !isMobileEra) {
         var loadGpu = function () {
           if (gpuLoading || gpu) return;
           gpuLoading = true;

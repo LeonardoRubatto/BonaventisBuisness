@@ -360,7 +360,13 @@
      see the comment on .era__w--key itself), just a smaller ratio than
      desktop's 2.6em: the text column here is only ~280-330px wide, and
      the longest key word at 2.6× a 35px phrase overflows it outright */
-  .era__w--key{font-size:1.5em}
+  /* the JS skips the bubble-particle canvas for these words on mobile
+     entirely (see the .era__w--key comment in bonaventis-fx.js) — its own
+     palette is a handful of pale, low-contrast tones tuned to read on a
+     big screen, easy to lose on a small one. Plain coral instead, so the
+     couple of key words in the phrase stay unmistakably the couple of key
+     words: no particle canvas to be legible without. */
+  .era__w--key{font-size:1.5em;color:var(--coral-2)}
   .era__note{font-size:15.5px}
 }
 
