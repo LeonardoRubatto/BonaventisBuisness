@@ -575,6 +575,21 @@
           bubbleSprite(240, 182, 122),
           bubbleSprite(172, 206, 216),
           bubbleSprite(248, 240, 225)
+        ],
+        /* Mobile-only variant of the same bubble (see the isMobileEra
+           branch above): all four tints pulled from the coral family
+           instead of "bubbles"' cream/pale-blue mix, and each one darker/
+           more saturated than that palette's own coral entry — but still
+           nowhere near the brand's actual darkest corals (--coral #B4441C,
+           --coral-ink #8A3616): the comment on `bubbles` above already
+           found that a color needs real distance from the #16202B ink
+           behind it to read as a bubble instead of a hole in the word, and
+           that same floor applies here just as much as it did there. */
+        coral: [
+          bubbleSprite(224, 116, 47),  /* --coral-2 */
+          bubbleSprite(217, 104, 43),
+          bubbleSprite(232, 168, 124),
+          bubbleSprite(240, 149, 90)
         ]
       };
       return SPRITES;
@@ -893,17 +908,19 @@
       var isMobileEra = mq('(max-width:759px)');
 
       var kinds = panels.map(function (p) { return p.getAttribute('data-fx-kind'); });
-      /* On mobile the couple of key words (.era__w--key) skip the particle
-         canvas altogether and just stay plain, bold text — coloured coral
-         by CSS (see .era__w--key in bonaventis-fx.css) instead of relying
-         on the bubble sprites' own pale, low-contrast palette to read on a
-         small, often glare-lit screen. Every other per-frame cost tied to
-         this (building the glyph's own canvas, sampling it, animating and
-         redrawing its particles 60 times a second) disappears with it. */
+      /* Mobile keeps the bubble-particle canvas (unlike the WebGPU
+         jellyfish and the SVG warp above, this one is cheap — a single
+         small offscreen canvas per key word) but swaps its palette: the
+         default "bubbles" set leans pale/pastel (cream, powder blue),
+         tuned to read on a big screen, and got lost on a small one. The
+         "coral" palette below is the same bubble shape, all in the site's
+         own coral family instead — see the coral: entry in getSprites()
+         for why it still stops short of the brand's darkest corals. */
       var words = panels.map(function (p) {
-        if (!p.getAttribute('data-fx-kind') || isMobileEra) return [];
+        if (!p.getAttribute('data-fx-kind')) return [];
+        var kind = isMobileEra ? 'coral' : p.getAttribute('data-fx-kind');
         return [].slice.call(p.querySelectorAll('.era__w')).map(function (el) {
-          var glyph = fxType.makeKeyGlyph(el, p.getAttribute('data-fx-kind'));
+          var glyph = fxType.makeKeyGlyph(el, kind);
           return glyph && { el: el, glyph: glyph, key: el.classList.contains('era__w--key') };
         }).filter(Boolean);
       });
