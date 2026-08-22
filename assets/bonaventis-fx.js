@@ -1465,6 +1465,25 @@
       era.setAttribute('data-era-live', '');
 
       var target = -1;
+      /* Two problems, one fix: on a fast flick `raw` can land several
+         panels ahead of `target` in a single frame — jumping straight
+         there used to skip the in-between panel's crossfade entirely, so
+         the same section read differently (sometimes animated, sometimes
+         not) depending purely on how fast the visitor happened to scroll.
+         STEP_COOLDOWN_MS below fixes both at once: a step is capped at one
+         panel at a time (nothing is ever skipped) and the next one cannot
+         start until this one has had the cooldown's worth of real time to
+         land, so the pace a visitor sees is set by this number alone,
+         never by scroll speed — a fast flick past several thresholds just
+         plays each panel in turn at this same fixed pace instead of
+         glitching through them. Set to AURORA_DUR — the longest of the
+         handful of fixed-duration animations a step kicks off (the jelly/
+         camera glide, matching gpu.setView's own 1000ms below; the
+         .era__body crossfade and EXIT_MS bubble dissolve both finish
+         sooner, at 850ms) — so none of them is ever cut short by the next
+         step starting underneath it. */
+      var STEP_COOLDOWN_MS = AURORA_DUR;
+      var lastStepAt = 0;
 
       var render = function (now) {
         var rect = track.getBoundingClientRect();
@@ -1487,15 +1506,22 @@
            threshold, nudged by hysteresis at the exact crossing line so a
            pixel of scroll jitter there cannot flip it back and forth */
         var raw = clamp(Math.floor(p * n), 0, n - 1);
-        var next = target < 0 ? raw : target;
-        if (target >= 0 && raw !== target) {
-          var boundary = (raw > target ? raw : target) * seg;
-          next = Math.abs(p - boundary) < HYST ? target : raw;
+        var next = target;
+        if (target < 0) {
+          /* first entry only: land directly on whatever panel is already
+             in view — there is nothing playing yet for a skipped step to
+             have skipped */
+          next = raw;
+        } else if (raw !== target && now - lastStepAt >= STEP_COOLDOWN_MS) {
+          var dirStep = raw > target ? 1 : -1;
+          var boundary = (dirStep > 0 ? target + 1 : target) * seg;
+          next = Math.abs(p - boundary) < HYST ? target : target + dirStep;
         }
 
         if (next !== target) {
           var dir = target < 0 ? 1 : (next > target ? 1 : -1);
           target = next;
+          lastStepAt = now;
           setAuroraScene(target, now);
           /* the real camera flying to a different vantage point in actual
              3D space — the same trigger, the same idea as setAuroraScene

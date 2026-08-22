@@ -26,7 +26,10 @@
 @keyframes mokaCue{0%{transform:translateX(-100%)}45%,100%{transform:translateX(100%)}}
 
 .moka-story__track{height:520svh;position:relative}
-.moka-story__sticky{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--cream);isolation:isolate}
+/* same 100dvh follow-up as .era__sticky in bonaventis-fx.css: svh alone
+   can fall short of the real viewport once iOS Safari's toolbar auto-hides
+   mid-scroll, leaving an uncovered sliver below the pinned box. */
+.moka-story__sticky{position:sticky;top:0;height:100svh;height:100dvh;overflow:hidden;background:var(--cream);isolation:isolate}
 .moka-story__canvas{position:absolute;inset:clamp(88px,9.5vh,108px) clamp(18px,4.4vw,70px) clamp(28px,4vh,52px);min-height:0}
 .moka-story__phase{position:absolute;left:clamp(54px,7vw,118px);top:clamp(72px,8vh,88px);z-index:8;display:flex;align-items:baseline;gap:12px;pointer-events:none}
 .moka-story__phase-num{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--coral);min-width:22px}
